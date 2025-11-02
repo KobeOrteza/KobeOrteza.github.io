@@ -5,266 +5,383 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kobe Lean P. Orteza — AI Engineering Portfolio</title>
   <meta name="description" content="Kobe Lean P. Orteza — BS AI Engineering student portfolio: projects, reflections, and contact." />
+  <meta name="author" content="Kobe Lean P. Orteza" />
   <style>
     :root{
-      --bg:#070710;
-      --card:#0d0d14;
-      --muted:#9aa0b4;
-      --neon:#00f0ff;
-      --accent:#8b5cf6; /* purple */
+      --bg: #070710;
+      --card: #0d0d14;
+      --muted: #9aa0b4;
+      --neon: #00f0ff;
+      --accent: #8b5cf6;
       --glass: rgba(255,255,255,0.03);
       --glass-2: rgba(255,255,255,0.02);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      --radius: 12px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color-scheme: dark;
     }
+
+    /* Reset & layout */
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(139,92,246,0.06), transparent), radial-gradient(800px 400px at 90% 90%, rgba(0,240,255,0.03), transparent), var(--bg);color:#e6eef8}
+    html,body{height:100%;margin:0;background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(139,92,246,0.06), transparent),
+      radial-gradient(800px 400px at 90% 90%, rgba(0,240,255,0.03), transparent),
+      var(--bg);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
     a{color:var(--neon);text-decoration:none}
+    a:focus{outline:2px dashed var(--neon);outline-offset:4px}
     .container{max-width:1100px;margin:0 auto;padding:28px}
+
+    /* Header */
     header{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;gap:14px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--neon));display:flex;align-items:center;justify-content:center;color:#071028;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,0.6)}
-    nav a{margin-left:18px;font-weight:600;color:var(--muted)}
+    .logo{
+      width:60px;height:60px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--neon));
+      display:flex;align-items:center;justify-content:center;
+      color:#071028;font-weight:800;font-size:20px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.6);
+    }
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{font-weight:600;color:var(--muted)}
     nav a:hover{color:var(--neon)}
-    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;margin-top:40px}
-    .card{background:linear-gradient(180deg,var(--glass),var(--glass-2));border:1px solid rgba(255,255,255,0.04);padding:22px;border-radius:14px;box-shadow:0 6px 30px rgba(11,12,20,0.6)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start;margin-top:34px}
+    .card{
+      background:linear-gradient(180deg,var(--glass),var(--glass-2));
+      border:1px solid rgba(255,255,255,0.04);
+      padding:22px;border-radius:var(--radius);
+      box-shadow:0 10px 40px rgba(11,12,20,0.6);
+    }
     h1{margin:0;font-size:28px}
-    .tagline{color:var(--muted);margin-top:8px}
-    .hero-cta{margin-top:18px}
-    .btn{display:inline-block;padding:10px 14px;border-radius:10px;font-weight:700;background:linear-gradient(90deg,var(--neon),var(--accent));color:#071028}
+    .tagline{color:var(--muted);margin-top:8px;font-weight:600}
+    .hero-cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-block;padding:10px 14px;border-radius:10px;font-weight:700;
+      background:linear-gradient(90deg,var(--neon),var(--accent));
+      color:#071028;border:none;cursor:pointer;
+      text-decoration:none;
+    }
+    .muted-link{color:var(--muted);font-weight:700;align-self:center}
+
+    .neon-line{height:2px;background:linear-gradient(90deg, transparent, var(--neon), transparent);border-radius:4px;margin:12px 0}
+
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+
+    /* Profile aside */
     .profile-card{background-image:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;text-align:center}
-    .avatar{width:120px;height:120px;border-radius:14px;margin:0 auto;background:linear-gradient(135deg,#071028, rgba(0,0,0,0.3));display:flex;align-items:center;justify-content:center;font-size:42px;color:var(--neon);box-shadow:0 12px 40px rgba(0,0,0,0.6)}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
-    section{margin-top:36px}
+    .avatar{width:120px;height:120px;border-radius:14px;margin:0 auto;background:linear-gradient(135deg,#071028, rgba(0,0,0,0.3));display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--neon);box-shadow:0 12px 40px rgba(0,0,0,0.6);font-weight:800}
+    .contact-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;align-items:center}
+
+    /* Sections */
+    main{margin-top:18px}
+    section{margin-top:28px}
+    h2{margin:0 0 8px 0}
+    .meta{font-size:13px;color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);font-size:13px;margin-right:8px;margin-top:6px}
+
+    /* Projects */
     .projects-list{display:grid;grid-template-columns:1fr;gap:12px}
     .project{padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-    .project h3{margin:0 0 6px 0}
-    .meta{font-size:13px;color:var(--muted)}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);font-size:13px;margin-right:8px}
-    .blog-post{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* Two-column lists */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+    /* Achievements list */
+    .achievements{display:grid;gap:8px}
+    .achievement-category{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* Footer */
     footer{margin:48px 0 16px 0;color:var(--muted);font-size:14px;text-align:center}
-    /* responsive */
-    @media(max-width:880px){
-      .hero{grid-template-columns:1fr;}
+
+    /* Utility */
+    .small{font-size:13px;color:var(--muted)}
+    .muted{color:var(--muted)}
+    .code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:6px}
+
+    /* Responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}
       .grid{grid-template-columns:1fr}
       nav{display:none}
+      .two-col{grid-template-columns:1fr}
     }
-    /* small decorative lines */
-    .neon-line{height:2px;background:linear-gradient(90deg, transparent, var(--neon), transparent);border-radius:4px;margin:12px 0}
-    .code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:6px}
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="document">
     <header>
-      <div class="brand">
-        <div class="logo">KO</div>
+      <div class="brand" aria-label="Brand">
+        <div class="logo" aria-hidden="true">KO</div>
         <div>
           <div style="font-weight:800">Kobe Lean P. Orteza</div>
-          <div style="font-size:13px;color:var(--muted)">BS AI Engineering — Mapúa University</div>
+          <div class="small muted">BS AI Engineering — Mapúa University</div>
         </div>
       </div>
-      <nav>
+
+      <nav aria-label="Primary navigation">
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#portfolio">Portfolio</a>
-        <a href="#reflections">Reflections</a>
+        <a href="#achievements">Achievements</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
 
-    <main id="home">
+    <main id="home" aria-labelledby="intro">
       <div class="hero">
-        <div class="card">
-          <h1>Kobe Lean P. Orteza</h1>
-          <div class="tagline">AI Engineering Student | Future Innovator in Artificial Intelligence</div>
+        <section class="card" aria-labelledby="intro">
+          <h1 id="intro">Kobe Lean P. Orteza</h1>
+          <div class="tagline">AI Engineering Student | Innovator • Robotics • Ethical AI</div>
+
           <div class="hero-cta">
             <a class="btn" href="#portfolio">View Projects</a>
-            <a style="margin-left:12px;color:var(--muted);font-weight:700" href="#contact">Get in touch</a>
+            <a class="muted-link" href="#contact">Get in touch</a>
           </div>
 
-          <div class="neon-line"></div>
+          <div class="neon-line" aria-hidden="true"></div>
 
-          <div style="margin-top:12px;color:var(--muted)">
-            <strong>Focus areas:</strong> Embedded systems & robotics · Ethical AI · Real-time ML · Mobile apps
-          </div>
+          <p class="small muted"><strong>Focus areas:</strong> Embedded systems & robotics · Ethical AI · Real-time ML · Mobile apps</p>
 
-          <div class="grid">
-            <div class="card" style="margin-top:10px">
-              <div style="font-size:13px;color:var(--muted)">Education</div>
+          <div class="grid" aria-hidden="false">
+            <div class="card" aria-label="Education snapshot">
+              <div class="small muted">Education</div>
               <div style="font-weight:700;margin-top:6px">BS Artificial Intelligence Engineering</div>
-              <div style="font-size:13px;color:var(--muted)">Mapúa University — Senior High → College</div>
+              <div class="small muted">Mapúa University — Senior High → College</div>
+              <div class="small muted" style="margin-top:6px"><strong>Expected Graduation:</strong> 2025–2029</div>
             </div>
 
-            <div class="card" style="margin-top:10px">
-              <div style="font-size:13px;color:var(--muted)">Skills</div>
-              <div style="margin-top:6px">
+            <div class="card" aria-label="Skills snapshot">
+              <div class="small muted">Technical Skills</div>
+              <div style="margin-top:8px">
                 <span class="pill">Python</span>
-                <span class="pill">Arduino / C++</span>
+                <span class="pill">C++ / Arduino</span>
                 <span class="pill">Flutter</span>
+                <span class="pill">Firebase</span>
                 <span class="pill">ML / PyTorch</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <aside class="profile-card">
-          <div class="avatar">K</div>
+        </section>
+
+        <aside class="profile-card" aria-labelledby="contact-block">
+          <div class="avatar" aria-hidden="true">K</div>
           <div style="font-weight:700;margin-top:12px">Kobe Lean P. Orteza</div>
-          <div style="color:var(--muted);font-size:13px;margin-top:6px">BS AI Engineering • Mapúa University</div>
-          <div style="margin-top:12px"><a class="btn" href="#contact">Contact</a></div>
+          <div class="small muted" style="margin-top:6px">BS AI Engineering • Mapúa University</div>
+
+          <div id="contact-block" class="contact-list" role="contentinfo">
+            <div class="small muted">📍 Manila, Philippines</div>
+            <div class="small" style="margin-top:4px">
+              ✉️ <a class="code" href="mailto:kobeazetro@gmail.com">kobeazetro@gmail.com</a><br>
+              📱 <a class="code" href="tel:+639564816314">0956 481 6314</a><br>
+              🔗 <a class="code" href="https://github.com/KobeOrteza" target="_blank" rel="noopener">Git: KobeOrteza</a>
+            </div>
+
+            <div style="margin-top:12px">
+              <a class="btn" href="#contact">Contact</a>
+            </div>
+          </div>
         </aside>
       </div>
 
       <!-- ABOUT -->
-      <section id="about">
-        <div class="card">
-          <h2>About Me</h2>
-          <div class="neon-line"></div>
-          <p style="color:var(--muted);line-height:1.6">I’m Kobe Lean P. Orteza — a student of BS Artificial Intelligence Engineering with a passion for building practical robotics and ethical AI systems that help communities. I first discovered robotics in Grade 10 and since then I’ve been driven to apply AI in tangible ways, from hardware prototypes (Arduino) to mobile applications. I chose AI Engineering because it lets me combine software, hardware, and real-world problem solving.</p>
+      <section id="about" class="card" aria-labelledby="about-heading">
+        <h2 id="about-heading">About Me</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="small muted" style="line-height:1.6">
+          I’m Kobe Lean P. Orteza — an aspiring AI Engineer and innovator with a strong foundation in STEM, robotics, and the arts.
+          I enjoy combining creativity and technology to build practical solutions such as robotics prototypes, assistive wearables, and ethical AI tools.
+        </p>
 
-          <h3 style="margin-top:10px">What I believe</h3>
-          <ul style="color:var(--muted);line-height:1.6">
-            <li>Good AI should be transparent, inclusive, and built for people — not just algorithms.</li>
-            <li>Robotics and low-cost automation can have a huge impact in agriculture and public health.</li>
-            <li>Learning by building is the fastest way to master engineering skills.</li>
-          </ul>
+        <h3 style="margin-top:12px">Education</h3>
+        <div class="two-col" style="margin-top:8px">
+          <div>
+            <div style="font-weight:700">Mapúa University</div>
+            <div class="small muted">Bachelor of Science in Artificial Intelligence Engineering</div>
+            <div class="small muted" style="margin-top:4px"><strong>Expected Graduation:</strong> 2025–2029</div>
+          </div>
+          <div>
+            <div style="font-weight:700">University of Saint Louis, Tuguegarao</div>
+            <div class="small muted">Senior High School — Academic Track (STEM)</div>
+            <div class="small muted" style="margin-top:4px"><strong>Graduated:</strong> 2023–2025</div>
+          </div>
         </div>
+
+        <h3 style="margin-top:12px">Technical Skills</h3>
+        <div class="grid" style="margin-top:8px">
+          <div class="card">
+            <div style="font-weight:700">Programming & Development</div>
+            <div class="small muted" style="margin-top:6px">Python · C++ · Arduino · Flutter · Firebase</div>
+          </div>
+          <div class="card">
+            <div style="font-weight:700">AI & Data Science</div>
+            <div class="small muted" style="margin-top:6px">Machine Learning · Data Analysis · Bias Detection Frameworks</div>
+          </div>
+          <div class="card">
+            <div style="font-weight:700">Robotics & Engineering</div>
+            <div class="small muted" style="margin-top:6px">Arduino-based Prototyping · IoT Systems · Mechatronics · Sensors Integration</div>
+          </div>
+          <div class="card">
+            <div style="font-weight:700">Design & Digital Arts</div>
+            <div class="small muted" style="margin-top:6px">Digital Illustration · Cartooning · Mural Painting · Scrap Art · Jungle Dish Gardening</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:12px">Tools & Platforms</h3>
+        <p class="small muted">MATLAB · SolidWorks · Photoshop · Illustrator · TinkerCAD · VS Code · PyCharm</p>
       </section>
 
       <!-- PORTFOLIO -->
-      <section id="portfolio">
-        <div class="card">
-          <h2>Portfolio</h2>
-          <div class="neon-line"></div>
-          <p style="color:var(--muted)">Selected projects — click each title (or the repo/demo link) to learn more.</p>
+      <section id="portfolio" class="card" aria-labelledby="portfolio-heading">
+        <h2 id="portfolio-heading">Projects & Innovations</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="small muted">Selected projects and ongoing proposals. Click a project to learn more (links can be added later).</p>
 
-          <div class="projects-list">
+        <div class="projects-list" style="margin-top:12px">
+          <article class="project" aria-labelledby="p1">
+            <h3 id="p1">Autonomous Solar-Powered Rice Mixer & Dryer</h3>
+            <div class="meta">Embedded systems · Sensors · Sustainable agriculture</div>
+            <p class="small muted" style="margin-top:8px">Robotics solution to assist Filipino farmers by automatically mixing rice grains under the sun with a humidity sensor to detect incoming rain.</p>
+          </article>
 
-            <article class="project">
-              <h3>Solar-Powered Autonomous Rice Mixer & Dryer</h3>
-              <div class="meta">Embedded systems · Sensors · Sustainable agriculture</div>
-              <p style="color:var(--muted);margin-top:8px">Prototype for an autonomous, solar-powered rice mixer & dryer that dries grains under sunlight while monitoring humidity and predicting incoming rain. Built with Arduino, humidity sensors, and a lightweight solar setup. Goal: reduce post-harvest losses for smallholder farmers.</p>
-              <div style="margin-top:10px">
-                <a class="pill" href="#">View repo</a>
-                <a class="pill" href="#">Demo / Poster</a>
-              </div>
-            </article>
+          <article class="project" aria-labelledby="p2">
+            <h3 id="p2">Real-Time Sign Language Translation Eyeglasses (Proposal)</h3>
+            <div class="meta">Computer vision · Edge ML · Assistive tech</div>
+            <p class="small muted" style="margin-top:8px">Wearable tech designed to bridge communication barriers for the Deaf community (proposal & early-stage research).</p>
+          </article>
 
-            <article class="project">
-              <h3>Real-Time Sign Language Translation Eyeglasses</h3>
-              <div class="meta">Computer vision · Edge ML · Assistive tech</div>
-              <p style="color:var(--muted);margin-top:8px">Proposal & early prototype for glasses that capture hand signs and translate them into text/audio in real time. Uses a compact camera, on-device model optimization strategies, and a mobile companion app. Aim: improve communication accessibility for the Deaf community.</p>
-              <div style="margin-top:10px">
-                <a class="pill" href="#">Project brief</a>
-                <a class="pill" href="#">Slides</a>
-              </div>
-            </article>
+          <article class="project" aria-labelledby="p3">
+            <h3 id="p3">Ethical AI Framework for Bias Detection (Capstone Idea)</h3>
+            <div class="meta">AI ethics · Model evaluation</div>
+            <p class="small muted" style="margin-top:8px">A practical framework and toolkit to detect and mitigate dataset/model biases with automated tests and visualizations.</p>
+          </article>
 
-            <article class="project">
-              <h3>Ethical AI Framework for Bias Detection</h3>
-              <div class="meta">AI ethics · Model evaluation · Research</div>
-              <p style="color:var(--muted);margin-top:8px">Capstone plan: a practical framework and toolkit to detect and report dataset/model biases. Includes automated tests, visualization tools, and recommended mitigation steps tailored for student projects and small teams.</p>
-              <div style="margin-top:10px">
-                <a class="pill" href="#">Research notes</a>
-                <a class="pill" href="#">Prototype tools</a>
-              </div>
-            </article>
+          <article class="project" aria-labelledby="p4">
+            <h3 id="p4">Hydro Turbine Energy from Wastewater</h3>
+            <div class="meta">Renewable energy · Research</div>
+            <p class="small muted" style="margin-top:8px">Research project exploring micro-hydro turbines to generate renewable energy from wastewater flows.</p>
+          </article>
 
-            <article class="project">
-              <h3>Ride-hailing App (Flutter + Firebase)</h3>
-              <div class="meta">Mobile dev · Cloud · User experience</div>
-              <p style="color:var(--muted);margin-top:8px">End-to-end ride-hailing prototype built with Flutter (UI + client) and Firebase (auth, database). Features: basic driver-rider flow, maps integration, and simulated matching algorithm for learning purposes.</p>
-              <div style="margin-top:10px">
-                <a class="pill" href="#">App repo</a>
-                <a class="pill" href="#">Play demo</a>
-              </div>
-            </article>
+          <article class="project" aria-labelledby="p5">
+            <h3 id="p5">Smart Medicine Pillbox</h3>
+            <div class="meta">Healthcare · IoT</div>
+            <p class="small muted" style="margin-top:8px">A prototype that reminds patients to take medication on time — featured by Explained PH.</p>
+          </article>
 
-            <article class="project">
-              <h3>Arduino Robotics Projects</h3>
-              <div class="meta">Embedded · Control systems · Prototyping</div>
-              <p style="color:var(--muted);margin-top:8px">Collection of small robots: line-followers, obstacle-avoidance bots, and sensor integration experiments. Great for learning hardware control loops and rapid iteration.</p>
-              <div style="margin-top:10px">
-                <a class="pill" href="#">Code samples</a>
-                <a class="pill" href="#">Build notes</a>
-              </div>
-            </article>
+          <article class="project" aria-labelledby="p6">
+            <h3 id="p6">Sumo Bot</h3>
+            <div class="meta">Robotics · Competitions</div>
+            <p class="small muted" style="margin-top:8px">An autonomous sumo robot built and programmed for school robotics competitions.</p>
+          </article>
+        </div>
+      </section>
 
-            <article class="project">
-              <h3>School / Subject Lab Works</h3>
-              <div class="meta">Class assignments · Reports · Labs</div>
-              <p style="color:var(--muted);margin-top:8px">A curated archive of lab reports, practical assignments, and graded projects that show steady skill growth across courses in AI, programming, and electronics.</p>
-              <div style="margin-top:10px">
-                <a class="pill" href="#">Reports</a>
-                <a class="pill" href="#">Datasets</a>
-              </div>
-            </article>
+      <!-- ACHIEVEMENTS -->
+      <section id="achievements" class="card" aria-labelledby="achieve-heading">
+        <h2 id="achieve-heading">Achievements</h2>
+        <div class="neon-line" aria-hidden="true"></div>
 
+        <div class="two-col" style="margin-top:12px">
+          <div class="achievement-category">
+            <strong>Technological & Innovation Achievements</strong>
+            <ul class="small muted" style="margin-top:8px;line-height:1.6">
+              <li>🤖 Robotica ng Masa 2019 — Regional 4th Runner-Up</li>
+              <li>🏆 School-Based Robotics Competitions — Sumo Bot Champion (Camalaniugan NHS) & other school champions</li>
+              <li>🥇 DICT Division Robotics Competition — Champion (Laser & Ultrasonic Sensor category)</li>
+              <li>🥉 UP STEM Expo (National Level) — Bronze Medalist for robotics innovation</li>
+              <li>🌟 Smart Pillbox featured by Explained PH</li>
+            </ul>
+          </div>
+
+          <div class="achievement-category">
+            <strong>Arts & Creativity Achievements</strong>
+            <ul class="small muted" style="margin-top:8px;line-height:1.6">
+              <li>🖌️ Poster-Making Awardee (2015–2024) — multiple school & interschool wins</li>
+              <li>🎨 Mural Contest Winner — University of Saint Louis Tuguegarao</li>
+              <li>🏅 Commissioned by XFM Radio Tuguegarao — station mural</li>
+              <li>✍️ Cartoonist since 2018 — multiple Congressional & Division-level awards</li>
+              <li>♻️ Scrap-Making Contest Winner — Senior High</li>
+              <li>🌱 Jungle Dish Gardening Contest — Champion</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <!-- REFLECTIONS / BLOG -->
-      <section id="reflections">
-        <div class="card">
-          <h2>Reflections & Blog</h2>
-          <div class="neon-line"></div>
+      <!-- EXTRACURRICULAR -->
+      <section id="extracurricular" class="card" aria-labelledby="extra-heading" style="margin-top:18px">
+        <h2 id="extra-heading">Extracurricular & Leadership</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <ul class="small muted" style="margin-top:8px;line-height:1.6">
+          <li>Active member, Robotics & Innovation Clubs</li>
+          <li>STEM exhibitor at division & national-level expos</li>
+          <li>Volunteer mural artist for school and community projects</li>
+        </ul>
+      </section>
 
-          <article class="blog-post" style="margin-top:10px">
-            <h3>Learning Embedded ML — Oct 2025</h3>
-            <div class="meta">Short reflection</div>
-            <p style="color:var(--muted);margin-top:8px">This month I focused on running a small neural network on an edge MCU. The tricky parts were model quantization and optimizing sensor read loops for responsiveness. Key takeaway: measure power and latency early; optimizing code is as important as improving the model.</p>
-          </article>
-
-          <article class="blog-post" style="margin-top:12px">
-            <h3>Why ethical AI matters in student projects — Sep 2025</h3>
-            <div class="meta">Short reflection</div>
-            <p style="color:var(--muted);margin-top:8px">Even in class projects, biased datasets can produce unfair outcomes. I started running simple bias checks (class balance, confusion matrices by subgroup) and it changed how I design data collection for the Ethical AI Framework project.</p>
-          </article>
-
-        </div>
+      <!-- PERSONAL STATEMENT -->
+      <section id="statement" class="card" aria-labelledby="ps-heading" style="margin-top:18px">
+        <h2 id="ps-heading">Personal Statement</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="small muted" style="line-height:1.6;margin-top:8px">
+          An aspiring AI Engineer and innovator with a strong foundation in STEM, robotics, and the arts.
+          I have proven achievements in regional and national robotics competitions, innovative prototypes, and recognized artworks.
+          My passion is to integrate creativity with technology to develop impactful solutions in engineering, artificial intelligence, and community development.
+        </p>
       </section>
 
       <!-- CONTACT -->
-      <section id="contact">
-        <div class="card">
-          <h2>Contact</h2>
-          <div class="neon-line"></div>
-          <p style="color:var(--muted)">I’m open to research collaborations, mentorship, and internships. Replace the email and links below with your real contact details before publishing.</p>
+      <section id="contact" class="card" aria-labelledby="contact-heading" style="margin-top:18px">
+        <h2 id="contact-heading">Contact</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="small muted">I’m open to research collaborations, mentorship, internships, and creative projects. Replace links below with the exact URLs you prefer before publishing.</p>
 
-          <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
-            <div class="card" style="min-width:220px;flex:1">
-              <div style="font-weight:700">Email</div>
-              <div style="color:var(--muted);margin-top:6px"><a class="code" href="mailto:your.email@domain.com">your.email@domain.com</a></div>
-            </div>
-
-            <div class="card" style="min-width:220px;flex:1">
-              <div style="font-weight:700">LinkedIn</div>
-              <div style="color:var(--muted);margin-top:6px"><a href="#">linkedin.com/in/your-profile</a></div>
-            </div>
-
-            <div class="card" style="min-width:220px;flex:1">
-              <div style="font-weight:700">GitHub</div>
-              <div style="color:var(--muted);margin-top:6px"><a href="#">github.com/your-username</a></div>
-            </div>
+        <div class="grid" style="margin-top:12px">
+          <div class="card">
+            <div style="font-weight:700">Email</div>
+            <div class="small muted" style="margin-top:6px"><a href="mailto:kobeazetro@gmail.com" class="code">kobeazetro@gmail.com</a></div>
           </div>
 
+          <div class="card">
+            <div style="font-weight:700">Phone</div>
+            <div class="small muted" style="margin-top:6px"><a href="tel:+639564816314" class="code">0956 481 6314</a></div>
+          </div>
+
+          <div class="card">
+            <div style="font-weight:700">GitHub</div>
+            <div class="small muted" style="margin-top:6px"><a href="https://github.com/KobeOrteza" target="_blank" rel="noopener" class="code">github.com/KobeOrteza</a></div>
+          </div>
+
+          <div class="card">
+            <div style="font-weight:700">Location</div>
+            <div class="small muted" style="margin-top:6px">Manila, Philippines</div>
+          </div>
         </div>
       </section>
 
     </main>
 
     <footer>
-      Made with ⚙️ • Kobe Lean P. Orteza • <span style="color:var(--muted)">Design: Futuristic AI Theme</span>
+      Made with ⚙️ • Kobe Lean P. Orteza • <span class="muted">Futuristic AI Theme</span>
     </footer>
   </div>
 
   <script>
-    // Smooth scroll for anchors
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', function(e){
-        const target = document.querySelector(this.getAttribute('href'));
-        if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+    // Smooth scroll (accessible)
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({behavior: 'smooth', block: 'start'});
+            history.replaceState(null, '', href);
+          }
+        }
       });
     });
   </script>
