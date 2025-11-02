@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kobe Lean P. Orteza — AI Engineering Portfolio</title>
+  <meta name="description" content="Kobe Lean P. Orteza — BS AI Engineering student portfolio: projects, reflections, and contact." />
+  <style>
+    :root{
+      --bg:#070710;
+      --card:#0d0d14;
+      --muted:#9aa0b4;
+      --neon:#00f0ff;
+      --accent:#8b5cf6; /* purple */
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(139,92,246,0.06), transparent), radial-gradient(800px 400px at 90% 90%, rgba(0,240,255,0.03), transparent), var(--bg);color:#e6eef8}
+    a{color:var(--neon);text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--neon));display:flex;align-items:center;justify-content:center;color:#071028;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,0.6)}
+    nav a{margin-left:18px;font-weight:600;color:var(--muted)}
+    nav a:hover{color:var(--neon)}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;margin-top:40px}
+    .card{background:linear-gradient(180deg,var(--glass),var(--glass-2));border:1px solid rgba(255,255,255,0.04);padding:22px;border-radius:14px;box-shadow:0 6px 30px rgba(11,12,20,0.6)}
+    h1{margin:0;font-size:28px}
+    .tagline{color:var(--muted);margin-top:8px}
+    .hero-cta{margin-top:18px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;font-weight:700;background:linear-gradient(90deg,var(--neon),var(--accent));color:#071028}
+    .profile-card{background-image:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;text-align:center}
+    .avatar{width:120px;height:120px;border-radius:14px;margin:0 auto;background:linear-gradient(135deg,#071028, rgba(0,0,0,0.3));display:flex;align-items:center;justify-content:center;font-size:42px;color:var(--neon);box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
+    section{margin-top:36px}
+    .projects-list{display:grid;grid-template-columns:1fr;gap:12px}
+    .project{padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    .project h3{margin:0 0 6px 0}
+    .meta{font-size:13px;color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);font-size:13px;margin-right:8px}
+    .blog-post{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+    footer{margin:48px 0 16px 0;color:var(--muted);font-size:14px;text-align:center}
+    /* responsive */
+    @media(max-width:880px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    /* small decorative lines */
+    .neon-line{height:2px;background:linear-gradient(90deg, transparent, var(--neon), transparent);border-radius:4px;margin:12px 0}
+    .code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">KO</div>
+        <div>
+          <div style="font-weight:800">Kobe Lean P. Orteza</div>
+          <div style="font-size:13px;color:var(--muted)">BS AI Engineering — Mapúa University</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#reflections">Reflections</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <div class="hero">
+        <div class="card">
+          <h1>Kobe Lean P. Orteza</h1>
+          <div class="tagline">AI Engineering Student | Future Innovator in Artificial Intelligence</div>
+          <div class="hero-cta">
+            <a class="btn" href="#portfolio">View Projects</a>
+            <a style="margin-left:12px;color:var(--muted);font-weight:700" href="#contact">Get in touch</a>
+          </div>
+
+          <div class="neon-line"></div>
+
+          <div style="margin-top:12px;color:var(--muted)">
+            <strong>Focus areas:</strong> Embedded systems & robotics · Ethical AI · Real-time ML · Mobile apps
+          </div>
+
+          <div class="grid">
+            <div class="card" style="margin-top:10px">
+              <div style="font-size:13px;color:var(--muted)">Education</div>
+              <div style="font-weight:700;margin-top:6px">BS Artificial Intelligence Engineering</div>
+              <div style="font-size:13px;color:var(--muted)">Mapúa University — Senior High → College</div>
+            </div>
+
+            <div class="card" style="margin-top:10px">
+              <div style="font-size:13px;color:var(--muted)">Skills</div>
+              <div style="margin-top:6px">
+                <span class="pill">Python</span>
+                <span class="pill">Arduino / C++</span>
+                <span class="pill">Flutter</span>
+                <span class="pill">ML / PyTorch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="profile-card">
+          <div class="avatar">K</div>
+          <div style="font-weight:700;margin-top:12px">Kobe Lean P. Orteza</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">BS AI Engineering • Mapúa University</div>
+          <div style="margin-top:12px"><a class="btn" href="#contact">Contact</a></div>
+        </aside>
+      </div>
+
+      <!-- ABOUT -->
+      <section id="about">
+        <div class="card">
+          <h2>About Me</h2>
+          <div class="neon-line"></div>
+          <p style="color:var(--muted);line-height:1.6">I’m Kobe Lean P. Orteza — a student of BS Artificial Intelligence Engineering with a passion for building practical robotics and ethical AI systems that help communities. I first discovered robotics in Grade 10 and since then I’ve been driven to apply AI in tangible ways, from hardware prototypes (Arduino) to mobile applications. I chose AI Engineering because it lets me combine software, hardware, and real-world problem solving.</p>
+
+          <h3 style="margin-top:10px">What I believe</h3>
+          <ul style="color:var(--muted);line-height:1.6">
+            <li>Good AI should be transparent, inclusive, and built for people — not just algorithms.</li>
+            <li>Robotics and low-cost automation can have a huge impact in agriculture and public health.</li>
+            <li>Learning by building is the fastest way to master engineering skills.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PORTFOLIO -->
+      <section id="portfolio">
+        <div class="card">
+          <h2>Portfolio</h2>
+          <div class="neon-line"></div>
+          <p style="color:var(--muted)">Selected projects — click each title (or the repo/demo link) to learn more.</p>
+
+          <div class="projects-list">
+
+            <article class="project">
+              <h3>Solar-Powered Autonomous Rice Mixer & Dryer</h3>
+              <div class="meta">Embedded systems · Sensors · Sustainable agriculture</div>
+              <p style="color:var(--muted);margin-top:8px">Prototype for an autonomous, solar-powered rice mixer & dryer that dries grains under sunlight while monitoring humidity and predicting incoming rain. Built with Arduino, humidity sensors, and a lightweight solar setup. Goal: reduce post-harvest losses for smallholder farmers.</p>
+              <div style="margin-top:10px">
+                <a class="pill" href="#">View repo</a>
+                <a class="pill" href="#">Demo / Poster</a>
+              </div>
+            </article>
+
+            <article class="project">
+              <h3>Real-Time Sign Language Translation Eyeglasses</h3>
+              <div class="meta">Computer vision · Edge ML · Assistive tech</div>
+              <p style="color:var(--muted);margin-top:8px">Proposal & early prototype for glasses that capture hand signs and translate them into text/audio in real time. Uses a compact camera, on-device model optimization strategies, and a mobile companion app. Aim: improve communication accessibility for the Deaf community.</p>
+              <div style="margin-top:10px">
+                <a class="pill" href="#">Project brief</a>
+                <a class="pill" href="#">Slides</a>
+              </div>
+            </article>
+
+            <article class="project">
+              <h3>Ethical AI Framework for Bias Detection</h3>
+              <div class="meta">AI ethics · Model evaluation · Research</div>
+              <p style="color:var(--muted);margin-top:8px">Capstone plan: a practical framework and toolkit to detect and report dataset/model biases. Includes automated tests, visualization tools, and recommended mitigation steps tailored for student projects and small teams.</p>
+              <div style="margin-top:10px">
+                <a class="pill" href="#">Research notes</a>
+                <a class="pill" href="#">Prototype tools</a>
+              </div>
+            </article>
+
+            <article class="project">
+              <h3>Ride-hailing App (Flutter + Firebase)</h3>
+              <div class="meta">Mobile dev · Cloud · User experience</div>
+              <p style="color:var(--muted);margin-top:8px">End-to-end ride-hailing prototype built with Flutter (UI + client) and Firebase (auth, database). Features: basic driver-rider flow, maps integration, and simulated matching algorithm for learning purposes.</p>
+              <div style="margin-top:10px">
+                <a class="pill" href="#">App repo</a>
+                <a class="pill" href="#">Play demo</a>
+              </div>
+            </article>
+
+            <article class="project">
+              <h3>Arduino Robotics Projects</h3>
+              <div class="meta">Embedded · Control systems · Prototyping</div>
+              <p style="color:var(--muted);margin-top:8px">Collection of small robots: line-followers, obstacle-avoidance bots, and sensor integration experiments. Great for learning hardware control loops and rapid iteration.</p>
+              <div style="margin-top:10px">
+                <a class="pill" href="#">Code samples</a>
+                <a class="pill" href="#">Build notes</a>
+              </div>
+            </article>
+
+            <article class="project">
+              <h3>School / Subject Lab Works</h3>
+              <div class="meta">Class assignments · Reports · Labs</div>
+              <p style="color:var(--muted);margin-top:8px">A curated archive of lab reports, practical assignments, and graded projects that show steady skill growth across courses in AI, programming, and electronics.</p>
+              <div style="margin-top:10px">
+                <a class="pill" href="#">Reports</a>
+                <a class="pill" href="#">Datasets</a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- REFLECTIONS / BLOG -->
+      <section id="reflections">
+        <div class="card">
+          <h2>Reflections & Blog</h2>
+          <div class="neon-line"></div>
+
+          <article class="blog-post" style="margin-top:10px">
+            <h3>Learning Embedded ML — Oct 2025</h3>
+            <div class="meta">Short reflection</div>
+            <p style="color:var(--muted);margin-top:8px">This month I focused on running a small neural network on an edge MCU. The tricky parts were model quantization and optimizing sensor read loops for responsiveness. Key takeaway: measure power and latency early; optimizing code is as important as improving the model.</p>
+          </article>
+
+          <article class="blog-post" style="margin-top:12px">
+            <h3>Why ethical AI matters in student projects — Sep 2025</h3>
+            <div class="meta">Short reflection</div>
+            <p style="color:var(--muted);margin-top:8px">Even in class projects, biased datasets can produce unfair outcomes. I started running simple bias checks (class balance, confusion matrices by subgroup) and it changed how I design data collection for the Ethical AI Framework project.</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <div class="card">
+          <h2>Contact</h2>
+          <div class="neon-line"></div>
+          <p style="color:var(--muted)">I’m open to research collaborations, mentorship, and internships. Replace the email and links below with your real contact details before publishing.</p>
+
+          <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
+            <div class="card" style="min-width:220px;flex:1">
+              <div style="font-weight:700">Email</div>
+              <div style="color:var(--muted);margin-top:6px"><a class="code" href="mailto:your.email@domain.com">your.email@domain.com</a></div>
+            </div>
+
+            <div class="card" style="min-width:220px;flex:1">
+              <div style="font-weight:700">LinkedIn</div>
+              <div style="color:var(--muted);margin-top:6px"><a href="#">linkedin.com/in/your-profile</a></div>
+            </div>
+
+            <div class="card" style="min-width:220px;flex:1">
+              <div style="font-weight:700">GitHub</div>
+              <div style="color:var(--muted);margin-top:6px"><a href="#">github.com/your-username</a></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      Made with ⚙️ • Kobe Lean P. Orteza • <span style="color:var(--muted)">Design: Futuristic AI Theme</span>
+    </footer>
+  </div>
+
+  <script>
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+      });
+    });
+  </script>
+</body>
+</html>
