@@ -255,12 +255,28 @@
   margin-bottom: 20px;
   color: #e6e6e6;
 }
+    #particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* behind everything */
+  pointer-events: none; /* allow clicks to pass through */
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(139,92,246,0.06), transparent),
+              radial-gradient(800px 400px at 90% 90%, rgba(0,240,255,0.03), transparent),
+              var(--bg);
+}
+
 
 
     
 </style>
 </head>
 <body>
+
+  <div id="particles-js"></div>
+
   <div class="container" role="document">
     <header>
       <div class="brand" aria-label="Brand">
@@ -606,6 +622,35 @@ In the future, I aspire to contribute to projects that merge AI research and com
         holo.innerHTML = '<div style="padding:18px;color:var(--muted);font-weight:700">Image unavailable</div>';
       });
     });
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.13.1/tsparticles.bundle.min.js"></script>
+<script>
+tsParticles.load("particles-js", {
+  fpsLimit: 60,
+  interactivity: {
+    events: {
+      onHover: { enable: true, mode: "repulse" },
+      onClick: { enable: true, mode: "push" },
+      resize: true
+    },
+    modes: {
+      repulse: { distance: 100, duration: 0.4 },
+      push: { quantity: 4 }
+    }
+  },
+  particles: {
+    number: { value: 40, density: { enable: true, area: 800 } },
+    color: { value: ["#00f0ff","#8b5cf6"] },
+    shape: { type: "circle" },
+    opacity: { value: 0.5 },
+    size: { value: { min: 2, max: 6 } },
+    links: { enable: true, distance: 150, color: "#00f0ff", opacity: 0.1, width: 1 },
+    move: { enable: true, speed: 1.5, direction: "none", random: true, straight: false, outMode: "out" }
+  },
+  detectRetina: true
+});
+</script>
+
   </script>
 </body>
 </html>
