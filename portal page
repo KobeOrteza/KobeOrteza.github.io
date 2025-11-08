@@ -94,7 +94,7 @@
   <div class="start-card">
     <h1>Kobe Lean P. Orteza</h1>
     <p>AI Engineering Student | Innovator • Robotics • Ethical AI</p>
-    <a class="btn-enter" href="portfolio.html">Enter Portfolio</a>
+    <a class="btn-enter" href="index.html">Enter Portfolio</a>
   </div>
 
   <!-- tsparticles for interactive background -->
