@@ -1,104 +1,107 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kobe Lean P. Orteza — Welcome</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #070710;
-  --neon: #00f0ff;
-  --accent: #8b5cf6;
-  --glass: rgba(255,255,255,0.03);
-  --radius: 12px;
-}
+  :root {
+    --bg: #070710;
+    --neon: #00f0ff;
+    --accent: #8b5cf6;
+    --glass: rgba(255,255,255,0.05);
+    --radius: 20px;
+  }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: var(--bg);
-  font-family: 'Orbitron', sans-serif;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body, html {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: 'Orbitron', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px;
+    color: #fff;
+  }
 
-/* Particles full screen */
-#particles-js {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top:0; left:0;
-  z-index: -1;
-}
+  #canvas {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index: -1;
+  }
 
-/* Main card */
-.start-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.05);
-  padding: 50px 80px;
-  border-radius: var(--radius);
-  text-align: center;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 60px rgba(0,240,255,0.2);
-  transition: transform 0.8s ease, opacity 0.8s ease;
-}
+  .start-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border: 1px solid rgba(0,240,255,0.3);
+    padding: 60px 80px;
+    border-radius: var(--radius);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 50px rgba(0,240,255,0.5), 0 10px 80px rgba(139,92,246,0.2);
+    text-align: center;
+    z-index: 2;
+    animation: fadeIn 1.5s ease forwards;
+    position: relative;
+  }
 
-h1 {
-  font-size: 3rem;
-  color: var(--neon);
-  text-shadow: 0 0 10px var(--neon), 0 0 20px var(--accent);
-  margin: 0 0 20px 0;
-}
+  h1 {
+    font-size: 3.5rem;
+    color: var(--neon);
+    text-shadow: 0 0 20px var(--neon), 0 0 40px var(--accent);
+    margin-bottom: 16px;
+  }
 
-p {
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 30px;
-  font-weight: 500;
-  font-size: 1.1rem;
-}
+  p {
+    font-size: 1.2rem;
+    color: rgba(230,238,248,0.7);
+    margin-bottom: 32px;
+  }
 
-.btn-enter {
-  padding: 14px 30px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 18px;
-  background: linear-gradient(90deg, var(--neon), var(--accent));
-  color: #070710;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+  .btn-enter {
+    padding: 16px 32px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--neon), var(--accent));
+    color: #070710;
+    box-shadow: 0 0 20px var(--neon), 0 0 40px var(--accent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-enter:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 40px var(--neon), 0 0 80px var(--accent);
+  }
 
-.btn-enter:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 20px var(--neon), 0 0 40px var(--accent);
-}
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(30px); }
+    to { opacity:1; transform: translateY(0); }
+  }
 
-/* Portal effect */
-.portal {
-  position: fixed;
-  top:50%; left:50%;
-  width: 0; height:0;
-  border-radius:50%;
-  background: radial-gradient(circle, #00f0ff 0%, #8b5cf6 70%, transparent 100%);
-  transform: translate(-50%, -50%) scale(0);
-  z-index: 1000;
-  transition: transform 1s ease;
-}
-
-.portal.active {
-  transform: translate(-50%, -50%) scale(50);
-}
+  /* Portal effect */
+  .portal {
+    position: fixed;
+    top:50%; left:50%;
+    width: 0; height:0;
+    border-radius:50%;
+    background: radial-gradient(circle, #00f0ff 0%, #8b5cf6 70%, transparent 100%);
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 1000;
+    transition: transform 1s ease;
+  }
+  .portal.active {
+    transform: translate(-50%, -50%) scale(50);
+  }
 </style>
 </head>
 <body>
 
-<div id="particles-js"></div>
+<canvas id="canvas"></canvas>
 
 <div class="start-card">
   <h1>Kobe Lean P. Orteza</h1>
@@ -108,47 +111,108 @@ p {
 
 <div class="portal" id="portal"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.13.1/tsparticles.bundle.min.js"></script>
 <script>
-tsParticles.load("particles-js", {
-  fpsLimit: 60,
-  interactivity: {
-    events: {
-      onHover: { enable: true, mode: "repulse" },
-      onClick: { enable: true, mode: "push" },
-      resize: true
-    },
-    modes: {
-      repulse: { distance: 150, duration: 0.4 },
-      push: { quantity: 4 }
-    }
-  },
-  particles: {
-    number: { value: 80, density: { enable: true, area: 900 } },
-    color: { value: ["#00f0ff","#8b5cf6","#ffffff"] },
-    shape: { type: "circle" },
-    opacity: { value: 0.5 },
-    size: { value: { min: 2, max: 6 } },
-    links: { enable: true, distance: 160, color: "#00f0ff", opacity: 0.15, width: 1 },
-    move: { enable: true, speed: 2, direction: "none", random: true, straight: false, outMode: "out" }
-  },
-  detectRetina: true
-});
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
+let particles = [];
+const colors = ['#00f0ff', '#8b5cf6', '#ffffff'];
+const particleCount = 150;
+
+// Particle class
+class Particle {
+  constructor() {
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.size = Math.random()*3 + 1;
+    this.speedX = (Math.random()-0.5)*2;
+    this.speedY = (Math.random()-0.5)*2;
+    this.color = colors[Math.floor(Math.random()*colors.length)];
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+    if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 12;
+    ctx.fill();
+  }
+}
+
+// Initialize particles
+for(let i=0;i<particleCount;i++){
+  particles.push(new Particle());
+}
+
+// Animate particles
+function animate(){
+  ctx.fillStyle = 'rgba(7,7,16,0.25)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  for(let i=0;i<particles.length;i++){
+    particles[i].update();
+    particles[i].draw();
+
+    // Connect particles
+    for(let j=i;j<particles.length;j++){
+      let dx = particles[i].x - particles[j].x;
+      let dy = particles[i].y - particles[j].y;
+      let distance = Math.sqrt(dx*dx + dy*dy);
+      if(distance < 120){
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(0,240,255,' + (1-distance/120) + ')';
+        ctx.lineWidth = 1;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+// Portal transition
 const enterBtn = document.getElementById('enterBtn');
 const portal = document.getElementById('portal');
 const card = document.querySelector('.start-card');
 
 enterBtn.addEventListener('click', () => {
-  // show portal
   portal.classList.add('active');
-  // zoom out card
+
+  // Make particles swirl into portal
+  particles.forEach(p => {
+    const dx = canvas.width/2 - p.x;
+    const dy = canvas.height/2 - p.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const angle = Math.atan2(dy, dx);
+    const speed = 4 + Math.random()*2;
+
+    let steps = dist / speed;
+    p.speedX = dx / steps;
+    p.speedY = dy / steps;
+  });
+
   card.style.transform = 'scale(0.2)';
   card.style.opacity = '0';
-  // redirect after animation
-  setTimeout(() => {
-    window.location.href = 'main.html';
-  }, 1000);
+
+  setTimeout(() => { window.location.href = 'main.html'; }, 1200);
+});
+
+// Resize canvas
+window.addEventListener('resize', ()=>{
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
 });
 </script>
 
