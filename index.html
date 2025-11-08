@@ -4,187 +4,153 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Kobe Lean P. Orteza — Welcome</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #070710;
-    --neon: #00f0ff;
-    --accent: #8b5cf6;
-    --glass: rgba(255,255,255,0.03);
-    --radius: 12px;
-    font-family: 'Orbitron', 'Inter', sans-serif;
-  }
+:root {
+  --bg: #070710;
+  --neon: #00f0ff;
+  --accent: #8b5cf6;
+  --glass: rgba(255,255,255,0.03);
+  --radius: 12px;
+}
 
-  html, body {
-    height: 100%;
-    margin: 0;
-    background: #070710;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #e6eef8;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
 
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+/* Particles full screen */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0; left:0;
+  z-index: -1;
+}
 
-  /* Particles container */
-  #particles-js {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-  }
+/* Main card */
+.start-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 50px 80px;
+  border-radius: var(--radius);
+  text-align: center;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 60px rgba(0,240,255,0.2);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
 
-  .start-card {
-    background: linear-gradient(180deg, var(--glass), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.04);
-    padding: 40px 60px;
-    border-radius: var(--radius);
-    box-shadow: 0 10px 40px rgba(11,12,20,0.6);
-    text-align: center;
-    animation: fadeIn 1s ease forwards;
-    backdrop-filter: blur(12px);
-  }
+h1 {
+  font-size: 3rem;
+  color: var(--neon);
+  text-shadow: 0 0 10px var(--neon), 0 0 20px var(--accent);
+  margin: 0 0 20px 0;
+}
 
-  h1 {
-    margin: 0;
-    font-size: 3rem;
-    letter-spacing: 2px;
-    color: var(--neon);
-    margin-bottom: 16px;
-    text-shadow: 0 0 8px var(--neon), 0 0 16px var(--accent);
-  }
+p {
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 30px;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
 
-  p {
-    margin: 8px 0 24px;
-    color: rgba(230,238,248,0.7);
-    font-weight: 500;
-  }
+.btn-enter {
+  padding: 14px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  background: linear-gradient(90deg, var(--neon), var(--accent));
+  color: #070710;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .btn-enter {
-    display: inline-block;
-    padding: 14px 28px;
-    border-radius: 12px;
-    font-weight: 700;
-    background: linear-gradient(90deg, var(--neon), var(--accent));
-    color: #071028;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    text-decoration: none;
-    transition: transform .2s ease, box-shadow .2s ease;
-  }
+.btn-enter:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px var(--neon), 0 0 40px var(--accent);
+}
 
-  .btn-enter:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(0,240,255,0.4);
-  }
+/* Portal effect */
+.portal {
+  position: fixed;
+  top:50%; left:50%;
+  width: 0; height:0;
+  border-radius:50%;
+  background: radial-gradient(circle, #00f0ff 0%, #8b5cf6 70%, transparent 100%);
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 1000;
+  transition: transform 1s ease;
+}
 
-  @keyframes fadeIn {
-    from {opacity:0; transform: translateY(20px);}
-    to {opacity:1; transform: translateY(0);}
-  }
-
-  /* Portal overlay */
-  #portal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle, #00f0ff 0%, #8b5cf6 60%, transparent 100%);
-    z-index: 999;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 1s ease, opacity 1s ease;
-    pointer-events: none;
-  }
-
-  #portal.active {
-    transform: translate(-50%, -50%) scale(50);
-    opacity: 1;
-  }
-
-  .start-card.transitioning {
-    animation: zoomOut 1s forwards;
-  }
-
-  @keyframes zoomOut {
-    0% { transform: scale(1); opacity:1; }
-    100% { transform: scale(0.3); opacity:0; }
-  }
+.portal.active {
+  transform: translate(-50%, -50%) scale(50);
+}
 </style>
 </head>
 <body>
 
-<!-- Particles container -->
 <div id="particles-js"></div>
 
 <div class="start-card">
   <h1>Kobe Lean P. Orteza</h1>
   <p>AI Engineering Student | Innovator • Robotics • Ethical AI</p>
-  <a class="btn-enter" href="#" id="enterBtn">Enter Portfolio</a>
+  <button class="btn-enter" id="enterBtn">Enter Portfolio</button>
 </div>
 
-<!-- Portal overlay -->
-<div id="portal"></div>
+<div class="portal" id="portal"></div>
 
-<!-- tsparticles -->
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.13.1/tsparticles.bundle.min.js"></script>
 <script>
-  tsParticles.load("particles-js", {
-    fpsLimit: 60,
-    interactivity: {
-      events: {
-        onHover: { enable: true, mode: "repulse" },
-        onClick: { enable: true, mode: "push" },
-        resize: true
-      },
-      modes: {
-        repulse: { distance: 150, duration: 0.4 },
-        push: { quantity: 6 }
-      }
+tsParticles.load("particles-js", {
+  fpsLimit: 60,
+  interactivity: {
+    events: {
+      onHover: { enable: true, mode: "repulse" },
+      onClick: { enable: true, mode: "push" },
+      resize: true
     },
-    particles: {
-      number: { value: 80, density: { enable: true, area: 900 } },
-      color: { value: ["#00f0ff","#8b5cf6","#ffffff"] },
-      shape: { type: "circle" },
-      opacity: { value: 0.5 },
-      size: { value: { min: 2, max: 6 } },
-      links: { enable: true, distance: 180, color: "#00f0ff", opacity: 0.15, width: 1 },
-      move: { enable: true, speed: 2, direction: "none", random: true, straight: false, outMode: "out" }
-    },
-    detectRetina: true
-  });
+    modes: {
+      repulse: { distance: 150, duration: 0.4 },
+      push: { quantity: 4 }
+    }
+  },
+  particles: {
+    number: { value: 80, density: { enable: true, area: 900 } },
+    color: { value: ["#00f0ff","#8b5cf6","#ffffff"] },
+    shape: { type: "circle" },
+    opacity: { value: 0.5 },
+    size: { value: { min: 2, max: 6 } },
+    links: { enable: true, distance: 160, color: "#00f0ff", opacity: 0.15, width: 1 },
+    move: { enable: true, speed: 2, direction: "none", random: true, straight: false, outMode: "out" }
+  },
+  detectRetina: true
+});
 
-  // Portal transition
-  const enterBtn = document.getElementById('enterBtn');
-  const portal = document.getElementById('portal');
-  const card = document.querySelector('.start-card');
+const enterBtn = document.getElementById('enterBtn');
+const portal = document.getElementById('portal');
+const card = document.querySelector('.start-card');
 
-  enterBtn.addEventListener('click', (e)=>{
-    e.preventDefault();
-
-    // Start portal animation
-    portal.classList.add('active');
-
-    // Card zoom/fade effect
-    card.classList.add('transitioning');
-
-    // Add particles swirling effect
-    tsParticles.domItem(0).particles.array.forEach(p => {
-      p.velocity.horizontal += (Math.random()-0.5)*5;
-      p.velocity.vertical += (Math.random()-0.5)*5;
-    });
-
-    // Redirect after 1s
-    setTimeout(()=>{
-      window.location.href = 'main.html';
-    }, 1000);
-  });
+enterBtn.addEventListener('click', () => {
+  // show portal
+  portal.classList.add('active');
+  // zoom out card
+  card.style.transform = 'scale(0.2)';
+  card.style.opacity = '0';
+  // redirect after animation
+  setTimeout(() => {
+    window.location.href = 'main.html';
+  }, 1000);
+});
 </script>
+
 </body>
 </html>
