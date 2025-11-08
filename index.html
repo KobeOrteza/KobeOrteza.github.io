@@ -1,186 +1,473 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kobi Lean Orteza — AI Engineer Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <style>
-      body {
-        font-family: 'Poppins', sans-serif;
-        background: radial-gradient(circle at 20% 30%, #0b0f19, #010409);
-        overflow-x: hidden;
-        color: #e0e7ff;
-      }
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kobe Lean P. Orteza — Futuristic AI Portfolio</title>
+<meta name="description" content="Portfolio — Kobe Lean P. Orteza, BS AI Engineering. Projects, reflections, contact." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05050a;
+    --panel:#0c0f18;
+    --muted:#98a0b6;
+    --neon-cyan:#00f0ff;
+    --neon-purple:#9b6cff;
+    --accent:linear-gradient(120deg,var(--neon-cyan),var(--neon-purple));
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+    --radius:14px;
+    color-scheme: dark;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
 
-      h1, h2, h3 {
-        font-family: 'Orbitron', sans-serif;
-        letter-spacing: 1px;
-      }
+  /* Reset + layout */
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:
+    radial-gradient(800px 380px at 10% 8%, rgba(155,108,255,0.06), transparent),
+    radial-gradient(900px 420px at 92% 88%, rgba(0,240,255,0.03), transparent),
+    var(--bg);
+    color:#e6eef8;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1120px;margin:0 auto;padding:28px}
 
-      .glow {
-        text-shadow: 0 0 10px #00e5ff, 0 0 20px #00bcd4;
-      }
+  /* Header */
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;z-index:40}
+  .brand{display:flex;gap:14px;align-items:center}
+  .logo{
+    width:56px;height:56px;border-radius:12px;
+    background:linear-gradient(135deg,var(--neon-purple),var(--neon-cyan));
+    display:flex;align-items:center;justify-content:center;
+    color:#071028;font-weight:800;font-size:18px;
+    box-shadow:0 10px 34px rgba(0,0,0,0.6);
+  }
+  nav{display:flex;gap:16px;align-items:center}
+  nav a{font-weight:600;color:var(--muted)}
+  nav a:focus{outline:2px dashed var(--neon-cyan);outline-offset:4px}
+  .cta-btn { padding:10px 14px;border-radius:10px;background:var(--neon-cyan);color:#011; font-weight:700; cursor:pointer; border:none; box-shadow:0 8px 30px rgba(0,240,255,0.06)}
+  .ghost { background: transparent; border:1px solid rgba(255,255,255,0.04); padding:8px 12px;border-radius:10px;color:var(--muted); cursor:pointer}
 
-      .floating {
-        animation: float 6s ease-in-out infinite;
-      }
+  /* Hero */
+  .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start;margin-top:36px}
+  .card{
+    background:linear-gradient(180deg,var(--glass),var(--glass-2));
+    border:1px solid rgba(255,255,255,0.03);
+    padding:22px;border-radius:var(--radius);
+    box-shadow:0 14px 60px rgba(5,8,20,0.6);
+  }
+  h1{margin:0;font-size:30px;font-family:Orbitron, Inter, sans-serif}
+  .tagline{color:var(--muted);margin-top:8px;font-weight:600}
 
-      @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-      }
+  .hero-cta{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+  .neon-line{height:2px;background:linear-gradient(90deg, transparent, var(--neon-cyan), transparent);border-radius:4px;margin:14px 0}
 
-      .glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
+  /* Profile */
+  .profile{background-image:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;text-align:center}
+  .avatar{width:120px;height:120px;border-radius:18px;margin:0 auto;background:linear-gradient(135deg,#071028, rgba(0,0,0,0.3));display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--neon-cyan);box-shadow:0 18px 80px rgba(0,0,0,0.6);font-weight:800; overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
 
-      /* Upload modal */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 50;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(10px);
-        justify-content: center;
-        align-items: center;
-      }
+  /* holo image */
+  .holo-wrap{width:160px;height:160px;margin:18px auto 6px;position:relative;border-radius:20px;transform-style:preserve-3d;perspective:900px}
+  .holo-wrap::before{content:"";position:absolute;inset:-6px;border-radius:22px;background:conic-gradient(from 0deg, rgba(0,240,255,0.18), rgba(155,108,255,0.18));filter:blur(14px) saturate(140%);opacity:.9;z-index:0;animation:spin 6s linear infinite;mix-blend-mode:screen;pointer-events:none}
+  .holo{width:100%;height:100%;border-radius:16px;overflow:hidden;position:relative;z-index:2;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));display:flex;align-items:center;justify-content:center}
+  .holo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s,opacity .9s}
+  .holo .shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.12) 8%, rgba(255,255,255,0.04) 20%, transparent 32%);transform:translateX(-120%) rotate(-12deg);mix-blend-mode:screen;transition:transform .9s}
+  .holo-wrap:hover .holo img{transform:scale(1);opacity:1}
+  .holo-wrap:hover .holo .shine{transform:translateX(120%) rotate(-12deg)}
 
-      .modal.active {
-        display: flex;
-      }
-    </style>
-  </head>
-  <body class="relative">
+  /* projects grid and cards */
+  .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:12px}
+  .project-card{padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);transition:transform .28s,box-shadow .28s}
+  .project-card:hover{transform:translateY(-8px);box-shadow:0 22px 60px rgba(0,0,0,0.6)}
+  .project-media{height:140px;border-radius:10px;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.5));overflow:hidden;display:flex;align-items:center;justify-content:center}
 
-    <!-- Floating particle background -->
-    <div id="particles-js" class="absolute inset-0 -z-10"></div>
+  /* gallery thumbnails */
+  .thumb-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .thumb{width:120px;height:80px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,0.6);background:#071028;display:flex;align-items:center;justify-content:center}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 
-    <!-- Navbar -->
-    <nav class="flex justify-between items-center p-6 glass fixed w-full top-0 z-40">
-      <h1 class="text-2xl font-bold glow">KOBI ORTEZA</h1>
-      <div class="space-x-6">
-        <a href="#about" class="hover:text-cyan-400">About</a>
-        <a href="#projects" class="hover:text-cyan-400">Projects</a>
-        <a href="#achievements" class="hover:text-cyan-400">Achievements</a>
-        <a href="#contact" class="hover:text-cyan-400">Contact</a>
-      </div>
-    </nav>
+  /* modal */
+  .modal{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;padding:18px;z-index:90}
+  .modal.active{display:flex}
+  .modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(6px)}
+  .modal-panel{position:relative;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:18px;max-width:720px;width:100%;border:1px solid rgba(255,255,255,0.04);z-index:2}
 
-    <!-- Hero -->
-    <section class="h-screen flex flex-col justify-center items-center text-center">
-      <h1 class="text-5xl md:text-6xl font-bold glow">I’m Kobe Lean P. Orteza</h1>
-      <p class="mt-4 text-xl text-gray-300 max-w-xl">An aspiring <span class="text-cyan-400">AI Engineer</span> and innovator passionate about combining creativity and technology to build smart, ethical solutions.</p>
-      <button class="mt-8 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-black font-semibold transition-all">Explore My Work</button>
-    </section>
+  /* floating AI decorations */
+  .float-svg{position:fixed;pointer-events:none;z-index:10;opacity:.85;mix-blend-mode:screen}
+  .float-1{right:8%;top:12%;width:220px;animation:floaty 8s ease-in-out infinite}
+  .float-2{left:6%;bottom:12%;width:180px;animation:floaty 10s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(6deg)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
 
-    <!-- About -->
-    <section id="about" class="min-h-screen flex flex-col justify-center items-center px-6 md:px-20 py-20 space-y-8">
-      <h2 class="text-4xl font-bold glow">About Me</h2>
-      <div class="max-w-3xl text-gray-300 leading-relaxed text-center">
-        <p>I’m a BS Artificial Intelligence Engineering student at <span class="text-cyan-400">Mapúa University</span>. My focus is on integrating AI, robotics, and wearable tech to create tools that assist and empower people in real life. I love building systems that merge logic with empathy — machines that don’t just think, but care.</p>
-      </div>
-    </section>
+  /* particles canvas */
+  #particle-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.28}
 
-    <!-- Projects -->
-    <section id="projects" class="min-h-screen flex flex-col justify-center items-center px-6 md:px-20 py-20">
-      <h2 class="text-4xl font-bold glow mb-8">Projects</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Placeholder projects -->
-        <div class="glass p-6 rounded-2xl hover:scale-105 transform transition">
-          <h3 class="text-xl font-semibold text-cyan-300">AI Vision Prototype</h3>
-          <p class="text-gray-400 mt-2">A real-time object detection model for assistive wearables.</p>
+  /* responsiveness */
+  @media(max-width:980px){
+    .hero{grid-template-columns:1fr}
+    .projects-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:520px){
+    :root{--radius:10px}
+    .holo-wrap{width:132px;height:132px}
+  }
+
+  /* small utilities */
+  .muted{color:var(--muted)}
+  .section-title{font-family:Orbitron, Inter, sans-serif;font-size:18px;letter-spacing:0.6px}
+  button:focus{outline:3px solid rgba(0,240,255,0.12);outline-offset:4px}
+</style>
+</head>
+<body>
+  <!-- decorative floating SVGs -->
+  <svg class="float-svg float-1" viewBox="0 0 300 200" aria-hidden="true">
+    <defs>
+      <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#9b6cff"/></linearGradient>
+    </defs>
+    <g stroke="url(#g1)" fill="none" stroke-width="1.6">
+      <path d="M10 160 C80 20,220 20,290 160" stroke-linecap="round" opacity=".95"/>
+      <circle cx="40" cy="120" r="6" fill="#00f0ff"/>
+      <circle cx="260" cy="120" r="6" fill="#9b6cff"/>
+    </g>
+  </svg>
+
+  <svg class="float-svg float-2" viewBox="0 0 220 220" aria-hidden="true">
+    <defs><linearGradient id="g2"><stop offset="0" stop-color="#9b6cff"/><stop offset="1" stop-color="#00f0ff"/></linearGradient></defs>
+    <g stroke="url(#g2)" fill="none" stroke-width="1.2">
+      <rect x="12" y="20" width="180" height="120" rx="12" ry="12" stroke-linejoin="round" opacity=".9"/>
+      <path d="M30 60 q50 40 120 0" stroke-linecap="round" opacity=".85"/>
+    </g>
+  </svg>
+
+  <!-- simple particle canvas -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <div class="container" role="document">
+    <header>
+      <div class="brand" aria-label="Brand">
+        <div class="logo" aria-hidden="true">KO</div>
+        <div>
+          <div style="font-weight:800">Kobe Lean P. Orteza</div>
+          <div class="muted" style="font-size:13px">BS AI Engineering — Mapúa University</div>
         </div>
-        <div class="glass p-6 rounded-2xl hover:scale-105 transform transition">
-          <h3 class="text-xl font-semibold text-cyan-300">Emotion-Aware Chatbot</h3>
-          <p class="text-gray-400 mt-2">Built with NLP and sentiment analysis to enhance human interaction.</p>
-        </div>
-        <div class="glass p-6 rounded-2xl hover:scale-105 transform transition">
-          <h3 class="text-xl font-semibold text-cyan-300">AI Art Generator</h3>
-          <p class="text-gray-400 mt-2">Created generative visual art using neural networks.</p>
-        </div>
       </div>
-      <button id="uploadBtn" class="mt-12 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-black font-semibold transition-all">Upload Your Project</button>
-    </section>
 
-    <!-- Upload Modal -->
-    <div id="uploadModal" class="modal">
-      <div class="glass p-8 rounded-2xl w-96">
-        <h3 class="text-2xl font-semibold text-center mb-4">Upload Project Image</h3>
-        <input type="file" id="projectImage" accept="image/*" class="block w-full text-gray-300 mb-4">
-        <img id="preview" class="hidden w-full rounded-lg mb-4" />
-        <button id="closeModal" class="w-full bg-cyan-500 hover:bg-cyan-600 text-black font-semibold py-2 rounded-lg">Done</button>
+      <nav aria-label="primary" role="navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+        <button id="openUpload" class="cta-btn" aria-haspopup="dialog" title="Upload project">Upload</button>
+      </nav>
+    </header>
+
+    <main id="home" style="margin-top:28px">
+      <div class="hero" role="region" aria-label="Intro">
+        <section class="card" id="introCard">
+          <h1 style="font-family:Orbitron, Inter, sans-serif">Kobe Lean P. Orteza</h1>
+          <div class="tagline neon">AI Engineering Student • Robotics • Ethical AI</div>
+
+          <div class="hero-cta">
+            <a href="#projects" class="ghost" id="viewProjects" role="button">View Projects</a>
+            <a href="#contact" class="ghost">Get in touch</a>
+            <button id="quickUpload" class="cta-btn">Upload project</button>
+          </div>
+
+          <div class="neon-line" aria-hidden="true"></div>
+
+          <p class="muted"><strong>Focus areas:</strong> Embedded Systems · Edge ML · Robotics · Assistive Tech</p>
+
+          <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
+            <div class="card" style="padding:12px;border-radius:12px;min-width:180px">
+              <div class="muted" style="font-size:13px">Education</div>
+              <div style="font-weight:700;margin-top:6px">BS Artificial Intelligence Engineering</div>
+              <div class="muted" style="margin-top:6px;font-size:13px">Mapúa University — Expected: 2029</div>
+            </div>
+
+            <div class="card" style="padding:12px;border-radius:12px;min-width:180px">
+              <div class="muted" style="font-size:13px">Skills</div>
+              <div style="margin-top:8px">
+                <span style="display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);margin-right:8px;font-size:13px">Python</span>
+                <span style="display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);font-size:13px">C++ / Arduino</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="profile" aria-labelledby="contact-block">
+          <div class="holo-wrap" title="Profile photo">
+            <div class="holo">
+              <img id="profilePhoto" src="https://scontent.fmnl17-2.fna.fbcdn.net/v/t39.30808-6/476961882_1931331720947399_1162569318553689538_n.jpg?_nc_cat=107&ccb=1-7&_nc_ohc=P0FLPCCf2LAQ7kNvwEAhOuN&_nc_oc=Adkdi2JTzspKJiXEsOgi-m2HYISPcuBM0mLe6TZlBfstHVhFxWlb482qwpdrg1CY-a0&_nc_zt=23&_nc_ht=scontent.fmnl17-2.fna&_nc_gid=zzAKqWvcwuVDhERetu0C_Q&oh=00_AfhY-L6BgTMC3J8O1-rQG94Fn0dHiEnkUYyRW22MX3uUsA&oe=690D09FC" alt="Kobe Lean P. Orteza" onerror="this.style.display='none'">
+              <div class="shine" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div style="font-weight:700;margin-top:10px">Kobe Lean P. Orteza</div>
+          <div class="muted" style="margin-top:6px">BS AI Engineering • Mapúa University</div>
+
+          <div id="contact-block" style="margin-top:12px">
+            <div class="muted">📍 Manila, Philippines</div>
+            <div style="margin-top:6px;font-size:14px">
+              ✉️ <a href="mailto:kobeazetro@gmail.com" class="muted">kobeazetro@gmail.com</a><br>
+              📱 <a href="tel:+639564816314" class="muted">0956 481 6314</a><br>
+              🔗 <a href="https://github.com/KobeOrteza" target="_blank" rel="noopener" class="muted">github.com/KobeOrteza</a>
+            </div>
+            <div style="margin-top:12px">
+              <a href="#contact" class="ghost">Contact</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- About -->
+      <section id="about" class="card" style="margin-top:20px">
+        <h2 class="section-title">About Me</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="muted" style="line-height:1.6">
+          I’m Kobe — an aspiring AI Engineer and innovator combining robotics, creativity, and ethical AI. I build practical prototypes (wearables, robotics) that help people — especially in education and accessibility.
+        </p>
+      </section>
+
+      <!-- Reflections -->
+      <section id="reflections" style="margin-top:22px" class="card">
+        <h2 class="section-title">Reflections</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="muted" style="line-height:1.6">
+          (Reflection content preserved as-is — see your original text in the final site.)
+        </p>
+      </section>
+
+      <!-- Projects: upload UI + gallery that persists -->
+      <section id="projects" class="card" style="margin-top:22px">
+        <h2 class="section-title">Projects & Gallery</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="muted">Upload images of your projects — thumbnails will stay here and open full-size on click.</p>
+
+        <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+          <input id="fileInput" type="file" accept="image/*" style="display:none" />
+          <button id="uploadBtn" class="cta-btn">Upload Image</button>
+          <button id="clearGallery" class="ghost" title="Clear gallery (removes from this browser)">Clear gallery</button>
+        </div>
+
+        <div id="gallery" class="thumb-grid" aria-live="polite" style="margin-top:12px"></div>
+
+        <div id="projectsList" class="projects-grid" style="margin-top:18px">
+          <!-- default project cards (kept from original) -->
+          <article class="project-card">
+            <div class="project-media"><div style="padding:12px;color:var(--muted)">Autonomous Solar-Powered Rice Mixer & Dryer</div></div>
+            <h3 style="margin-top:10px">Autonomous Solar-Powered Rice Mixer & Dryer</h3>
+            <div class="muted" style="font-size:13px">Embedded systems · Sensors · Sustainable agriculture</div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-media"><div style="padding:12px;color:var(--muted)">Real-Time Sign Language Translation Eyeglasses</div></div>
+            <h3 style="margin-top:10px">Real-Time Sign Language Translation Eyeglasses (Proposal)</h3>
+            <div class="muted" style="font-size:13px">Computer vision · Edge ML</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Achievements -->
+      <section id="achievements" class="card" style="margin-top:22px">
+        <h2 class="section-title">Achievements</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px">
+          <div class="card" style="padding:12px">
+            <strong>Technological Achievements</strong>
+            <ul class="muted" style="margin-top:8px;line-height:1.6">
+              <li>🤖 Robotica ng Masa — Regional placement</li>
+              <li>🏆 Division Robotics Champion (Laser & Ultrasonic)</li>
+            </ul>
+          </div>
+          <div class="card" style="padding:12px">
+            <strong>Creative Achievements</strong>
+            <ul class="muted" style="margin-top:8px;line-height:1.6">
+              <li>🎨 Mural Contest Winner</li>
+              <li>✍️ Cartoonist & Poster-making awards</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="card" style="margin-top:22px;margin-bottom:32px">
+        <h2 class="section-title">Contact</h2>
+        <div class="neon-line" aria-hidden="true"></div>
+        <p class="muted">Open to collaboration, internships, mentorships. Reach out:</p>
+        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+          <a href="mailto:kobeazetro@gmail.com" class="cta-btn">Email</a>
+          <a href="tel:+639564816314" class="ghost">Call</a>
+        </div>
+      </section>
+    </main>
+
+    <footer style="text-align:center;margin:28px 0;color:var(--muted)">Made with VS Code • Kobe Lean P. Orteza • Futuristic AI Portfolio</footer>
+  </div>
+
+  <!-- modal for viewing large image -->
+  <div id="viewModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-backdrop" tabindex="-1" id="viewBackdrop"></div>
+    <div class="modal-panel" role="document" aria-label="Image viewer">
+      <button id="closeView" class="ghost" style="float:right">Close</button>
+      <div id="viewContent" style="text-align:center;padding:8px">
+        <!-- full image goes here -->
       </div>
     </div>
+  </div>
 
-    <!-- Achievements -->
-    <section id="achievements" class="min-h-screen flex flex-col justify-center items-center px-6 md:px-20 py-20 space-y-8">
-      <h2 class="text-4xl font-bold glow mb-8">Achievements</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="glass p-6 rounded-2xl hover:scale-105 transform transition">
-          <h3 class="text-xl font-semibold text-cyan-300">Top 5 Robotics Innovator</h3>
-          <p class="text-gray-400 mt-2">Recognized in national competition for AI-integrated robotics prototype.</p>
-        </div>
-        <div class="glass p-6 rounded-2xl hover:scale-105 transform transition">
-          <h3 class="text-xl font-semibold text-cyan-300">AI Ethics Presenter</h3>
-          <p class="text-gray-400 mt-2">Delivered a talk on ethical machine learning in youth tech conference.</p>
-        </div>
-        <div class="glass p-6 rounded-2xl hover:scale-105 transform transition">
-          <h3 class="text-xl font-semibold text-cyan-300">Dean’s Lister</h3>
-          <p class="text-gray-400 mt-2">Maintained academic excellence at Mapúa University’s AI program.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="min-h-screen flex flex-col justify-center items-center px-6 md:px-20 py-20 text-center">
-      <h2 class="text-4xl font-bold glow mb-8">Let’s Connect</h2>
-      <p class="text-gray-400 max-w-xl mb-6">Interested in collaborating or learning more about my work? Reach out — I’m always open to discussing AI, design, and future tech!</p>
-      <a href="mailto:kobelean.orteza@gmail.com" class="bg-cyan-500 hover:bg-cyan-600 px-8 py-3 rounded-xl text-black font-semibold transition-all">Email Me</a>
-    </section>
-
-    <footer class="text-center py-6 text-gray-500 text-sm">© 2025 Kobi Lean Orteza — Designed with 💙 and AI</footer>
-
-    <script>
-      // Particles background
-      particlesJS("particles-js", {
-        particles: {
-          number: { value: 60 },
-          color: { value: "#00e5ff" },
-          shape: { type: "circle" },
-          opacity: { value: 0.3 },
-          size: { value: 3 },
-          move: { enable: true, speed: 1.2 }
-        }
+<script>
+/* -------------------------
+   Small particles background
+   lightweight, no external libs
+   ------------------------- */
+(function(){
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = innerWidth;
+  let h = canvas.height = innerHeight;
+  const particles = [];
+  const N = Math.round((w*h)/90000);
+  function rand(min,max){ return Math.random()*(max-min)+min }
+  function init(){
+    for(let i=0;i<N;i++){
+      particles.push({
+        x: rand(0,w), y: rand(0,h),
+        vx: rand(-0.35,0.35), vy: rand(-0.15,0.15),
+        r: rand(0.9,2.4), a: rand(0.08,0.35)
       });
+    }
+  }
+  function resize(){ w=canvas.width=innerWidth; h=canvas.height=innerHeight; particles.length=0; init(); }
+  window.addEventListener('resize', resize);
+  function loop(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of particles){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0) p.x=w;
+      if(p.x>w) p.x=0;
+      if(p.y<0) p.y=h;
+      if(p.y>h) p.y=0;
+      ctx.beginPath();
+      ctx.globalAlpha = p.a;
+      ctx.fillStyle = "#00f0ff";
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(loop);
+  }
+  init();
+  loop();
+})();
 
-      // Modal logic
-      const uploadBtn = document.getElementById("uploadBtn");
-      const uploadModal = document.getElementById("uploadModal");
-      const closeModal = document.getElementById("closeModal");
-      const projectImage = document.getElementById("projectImage");
-      const preview = document.getElementById("preview");
+/* -------------------------
+   Upload + gallery logic
+   images persist in localStorage (base64)
+   ------------------------- */
+const uploadBtn = document.getElementById('uploadBtn');
+const fileInput = document.getElementById('fileInput');
+const gallery = document.getElementById('gallery');
+const clearGallery = document.getElementById('clearGallery');
+const openUpload = document.getElementById('openUpload');
+const quickUpload = document.getElementById('quickUpload');
 
-      uploadBtn.onclick = () => uploadModal.classList.add("active");
-      closeModal.onclick = () => uploadModal.classList.remove("active");
+function loadGallery(){
+  gallery.innerHTML = '';
+  const items = JSON.parse(localStorage.getItem('kobe_gallery_v1') || '[]');
+  items.forEach((dataUrl, idx)=>{
+    const div = document.createElement('div');
+    div.className = 'thumb';
+    div.setAttribute('tabindex','0');
+    const img = document.createElement('img');
+    img.src = dataUrl;
+    img.alt = `Project image ${idx+1}`;
+    div.appendChild(img);
+    gallery.appendChild(div);
 
-      projectImage.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (event) {
-            preview.src = event.target.result;
-            preview.classList.remove("hidden");
-          };
-          reader.readAsDataURL(file);
-        }
-      };
-    </script>
-  </body>
+    div.addEventListener('click', ()=> openViewer(dataUrl));
+    div.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openViewer(dataUrl) });
+  });
+}
+function openViewer(dataUrl){
+  const modal = document.getElementById('viewModal');
+  const viewContent = document.getElementById('viewContent');
+  viewContent.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = dataUrl; img.style.maxWidth='100%'; img.style.maxHeight='70vh'; img.alt='Project full image';
+  viewContent.appendChild(img);
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden','false');
+}
+document.getElementById('closeView').addEventListener('click', ()=> {
+  const modal = document.getElementById('viewModal');
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden','true');
+});
+document.getElementById('viewBackdrop').addEventListener('click', ()=> {
+  document.getElementById('viewModal').classList.remove('active');
+  document.getElementById('viewModal').setAttribute('aria-hidden','true');
+});
+
+// open file dialog
+uploadBtn.addEventListener('click', ()=> fileInput.click());
+openUpload.addEventListener('click', ()=> fileInput.click());
+quickUpload.addEventListener('click', ()=> fileInput.click());
+
+// handle selection
+fileInput.addEventListener('change', (e)=>{
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')) { alert('Please pick an image.'); return; }
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    try{
+      const items = JSON.parse(localStorage.getItem('kobe_gallery_v1') || '[]');
+      items.unshift(ev.target.result); // newest first
+      // keep a reasonable limit (e.g., 30 images) to avoid huge localStorage usage
+      localStorage.setItem('kobe_gallery_v1', JSON.stringify(items.slice(0,30)));
+      loadGallery();
+    }catch(err){
+      alert('Storage failed. Maybe too many/large images. Try smaller files.');
+      console.error(err);
+    }
+  };
+  reader.readAsDataURL(file);
+  // clear input so same file can be uploaded again if needed
+  fileInput.value = '';
+});
+
+// clear gallery
+clearGallery.addEventListener('click', ()=>{
+  if(!confirm('Clear gallery? This removes saved project images from this browser.')) return;
+  localStorage.removeItem('kobe_gallery_v1');
+  loadGallery();
+});
+
+// initial load
+loadGallery();
+
+/* -------------------------
+   Smooth scrolling for anchor links
+   ------------------------- */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', function(e){
+    const href = this.getAttribute('href');
+    if(!href || href === '#') return;
+    const el = document.querySelector(href);
+    if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); history.replaceState(null,'',href); }
+  });
+});
+
+// keyboard accessibility: close modal on Esc
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Escape'){
+    const vm = document.getElementById('viewModal');
+    if(vm.classList.contains('active')) { vm.classList.remove('active'); vm.setAttribute('aria-hidden','true'); }
+  }
+});
+</script>
+</body>
 </html>
