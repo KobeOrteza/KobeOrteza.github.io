@@ -87,10 +87,69 @@
     .meta{font-size:13px;color:var(--muted)}
     .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);font-size:13px;margin-right:8px;margin-top:6px}
 
-    /* Projects */
-    .projects-list{display:grid;grid-template-columns:1fr;gap:12px}
-    .project{padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s}
-    .project:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(0,0,0,0.7)}
+    /* Projects Section */
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.project-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.project-hover:hover {
+  transform: scale(1.03);
+}
+
+.project-img {
+  width: 100%;
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.project-hover:hover .project-img {
+  transform: scale(1.1);
+  filter: brightness(0.7);
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.project-hover:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-overlay h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+  color: #00f0ff;
+}
+
+.project-overlay p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
+
 
     /* Two-column lists */
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -443,49 +502,75 @@
 </section>
 
       <!-- rest of site (unchanged but with entrance reveals) -->
-      <section id="portfolio" class="card fade-up" aria-labelledby="portfolio-heading" style="animation-delay:.5s">
-        <h2 id="portfolio-heading">Projects & Innovations</h2>
-        <div class="neon-line" aria-hidden="true"></div>
-        <p class="small muted">Selected projects and ongoing proposals. Click a project to learn more (links can be added later).</p>
+     <section id="portfolio" class="card fade-up" aria-labelledby="portfolio-heading" style="animation-delay:.5s">
+  <h2 id="portfolio-heading">Projects & Innovations</h2>
+  <div class="neon-line" aria-hidden="true"></div>
+  <p class="small muted">Selected projects and ongoing proposals. Hover over each project to learn more.</p>
 
-        <div class="projects-list" style="margin-top:12px">
-          <article class="project fade-up" style="animation-delay:.54s" aria-labelledby="p1">
-            <h3 id="p1">Autonomous Solar-Powered Rice Mixer & Dryer</h3>
-            <div class="meta">Embedded systems · Sensors · Sustainable agriculture</div>
-            <p class="small muted" style="margin-top:8px">Robotics solution to assist Filipino farmers by automatically mixing rice grains under the sun with a humidity sensor to detect incoming rain.</p>
-          </article>
+  <div class="projects-list">
+    <!-- Project 1 -->
+    <article class="project-hover" aria-labelledby="p1">
+      <div class="project-img" style="background-image:url('project1.jpg')"></div>
+      <div class="project-overlay">
+        <h3 id="p1">Autonomous Solar-Powered Rice Mixer & Dryer</h3>
+        <p>Embedded systems · Sensors · Sustainable agriculture</p>
+        <p class="small muted">Robotics solution to assist Filipino farmers by automatically mixing rice grains under the sun with a humidity sensor to detect incoming rain.</p>
+      </div>
+    </article>
 
-          <article class="project fade-up" style="animation-delay:.58s" aria-labelledby="p2">
-            <h3 id="p2">Real-Time Sign Language Translation Eyeglasses (Proposal)</h3>
-            <div class="meta">Computer vision · Edge ML · Assistive tech</div>
-            <p class="small muted" style="margin-top:8px">Wearable tech designed to bridge communication barriers for the Deaf community (proposal & early-stage research).</p>
-          </article>
+    <!-- Project 2 -->
+    <article class="project-hover" aria-labelledby="p2">
+      <div class="project-img" style="background-image:url('project2.jpg')"></div>
+      <div class="project-overlay">
+        <h3 id="p2">Real-Time Sign Language Translation Eyeglasses (Proposal)</h3>
+        <p>Computer vision · Edge ML · Assistive tech</p>
+        <p class="small muted">Wearable tech designed to bridge communication barriers for the Deaf community.</p>
+      </div>
+    </article>
 
-          <article class="project fade-up" style="animation-delay:.62s" aria-labelledby="p3">
-            <h3 id="p3">Ethical AI Framework for Bias Detection (Capstone Idea)</h3>
-            <div class="meta">AI ethics · Model evaluation</div>
-            <p class="small muted" style="margin-top:8px">A practical framework and toolkit to detect and mitigate dataset/model biases with automated tests and visualizations.</p>
-          </article>
+    <!-- Project 3 -->
+    <article class="project-hover" aria-labelledby="p3">
+      <div class="project-img" style="background-image:url('project3.jpg')"></div>
+      <div class="project-overlay">
+        <h3 id="p3">Ethical AI Framework for Bias Detection (Capstone Idea)</h3>
+        <p>AI ethics · Model evaluation</p>
+        <p class="small muted">Toolkit to detect and mitigate dataset/model biases with automated tests and visualizations.</p>
+      </div>
+    </article>
 
-          <article class="project fade-up" style="animation-delay:.66s" aria-labelledby="p4">
-            <h3 id="p4">Hydro Turbine Energy from Wastewater</h3>
-            <div class="meta">Renewable energy · Research</div>
-            <p class="small muted" style="margin-top:8px">Research project exploring micro-hydro turbines to generate renewable energy from wastewater flows.</p>
-          </article>
+    <!-- Project 4 -->
+    <article class="project-hover" aria-labelledby="p4">
+      <div class="project-img" style="background-image:url('project4.jpg')"></div>
+      <div class="project-overlay">
+        <h3 id="p4">Hydro Turbine Energy from Wastewater</h3>
+        <p>Renewable energy · Research</p>
+        <p class="small muted">Research exploring micro-hydro turbines to generate renewable energy from wastewater flows.</p>
+      </div>
+    </article>
 
-          <article class="project fade-up" style="animation-delay:.70s" aria-labelledby="p5">
-            <h3 id="p5">Smart Medicine Pillbox</h3>
-            <div class="meta">Healthcare · IoT</div>
-            <p class="small muted" style="margin-top:8px">A prototype that reminds patients to take medication on time — featured by Explained PH.</p>
-          </article>
+    <!-- Project 5 -->
+    <article class="project-hover" aria-labelledby="p5">
+      <div class="project-img" style="background-image:url('project5.jpg')"></div>
+      <div class="project-overlay">
+        <h3 id="p5">Smart Medicine Pillbox</h3>
+        <p>Healthcare · IoT</p>
+        <p class="small muted">Prototype that reminds patients to take medication on time — featured by Explained PH.</p>
+      </div>
+    </article>
 
-          <article class="project fade-up" style="animation-delay:.74s" aria-labelledby="p6">
-            <h3 id="p6">Sumo Bot</h3>
-            <div class="meta">Robotics · Competitions</div>
-            <p class="small muted" style="margin-top:8px">An autonomous sumo robot built and programmed for school robotics competitions.</p>
-          </article>
-        </div>
-      </section>
+    <!-- Project 6 -->
+    <article class="project-hover" aria-labelledby="p6">
+      <div class="project-img" style="background-image:url('project6.jpg')"></div>
+      <div class="project-overlay">
+        <h3 id="p6">Sumo Bot</h3>
+        <p>Robotics · Competitions</p>
+        <p class="small muted">Autonomous sumo robot built and programmed for school robotics competitions.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
 
       <section id="achievements" class="card fade-up" aria-labelledby="achieve-heading" style="animation-delay:.78s">
         <h2 id="achieve-heading">Achievements</h2>
