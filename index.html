@@ -1,220 +1,556 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kobe Lean P. Orteza — Welcome</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #070710;
-    --neon: #00f0ff;
-    --accent: #8b5cf6;
-    --glass: rgba(255,255,255,0.05);
-    --radius: 20px;
-  }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kobe Orteza — AI Engineering student building intelligent software, machine learning systems, and AI-integrated hardware.">
+  <meta name="theme-color" content="#070A0F">
+  <meta name="color-scheme" content="dark">
+  <title>Kobe Orteza — AI Engineering · Software · Hardware</title>
 
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body, html {
-    width: 100%; height: 100%;
-    background: var(--bg);
-    overflow: hidden;
-    font-family: 'Orbitron', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1200px;
-    color: #0c1533;
-  }
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070A0F'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%2357D8CE' stroke-width='2'/%3E%3Cpath d='M10 16h3l2-4 3 8 2-4h2' stroke='%23E0904F' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
-  #canvas {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    z-index: -1;
-  }
-
-  .start-card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    border: 1px solid rgba(0,240,255,0.3);
-    padding: 60px 80px;
-    border-radius: var(--radius);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 50px rgba(0,240,255,0.5), 0 10px 80px rgba(139,92,246,0.2);
-    text-align: center;
-    z-index: 2;
-    animation: fadeIn 1.5s ease forwards;
-    position: relative;
-  }
-
-  h1 {
-    font-size: 3.5rem;
-    color: var(--neon);
-    text-shadow: 0 0 20px var(--neon), 0 0 40px var(--accent);
-    margin-bottom: 16px;
-  }
-
-  p {
-    font-size: 1.2rem;
-    color: rgba(230,238,248,0.7);
-    margin-bottom: 32px;
-  }
-
-  .btn-enter {
-    padding: 16px 32px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 14px;
-    border: none;
-    cursor: pointer;
-    background: linear-gradient(90deg, var(--neon), var(--accent));
-    color: #070710;
-    box-shadow: 0 0 20px var(--neon), 0 0 40px var(--accent);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-decoration: none;
-  }
-  .btn-enter:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 0 40px var(--neon), 0 0 80px var(--accent);
-  }
-
-  @keyframes fadeIn {
-    from { opacity:0; transform: translateY(30px); }
-    to { opacity:1; transform: translateY(0); }
-  }
-
-  /* Portal effect */
-  .portal {
-    position: fixed;
-    top:50%; left:50%;
-    width: 0; height:0;
-    border-radius:50%;
-    background: radial-gradient(circle, #00f0ff 0%, #8b5cf6 70%, transparent 100%);
-    transform: translate(-50%, -50%) scale(0);
-    z-index: 1000;
-    transition: transform 1s ease;
-  }
-  .portal.active {
-    transform: translate(-50%, -50%) scale(50);
-  }
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor cursor-dot" aria-hidden="true"></div>
+  <div class="cursor cursor-ring" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-<canvas id="canvas"></canvas>
+  <a class="skip-link" href="#top">Skip to content</a>
 
-<div class="start-card">
-  <h1>Kobe Lean P. Orteza</h1>
-  <p>AI Engineering Student | Innovator • Robotics • Ethical AI</p>
-  <button class="btn-enter" id="enterBtn">Enter Portfolio</button>
-</div>
+  <div class="ambient ambient-a" aria-hidden="true"></div>
+  <div class="ambient ambient-b" aria-hidden="true"></div>
+  <canvas id="circuit-bg" aria-hidden="true"></canvas>
 
-<div class="portal" id="portal"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="ic-brain" viewBox="0 0 24 24"><path d="M9 3.5a3 3 0 0 0-3 3v.3A3.5 3.5 0 0 0 4.5 10a3.5 3.5 0 0 0 1 6.9 3 3 0 0 0 3 3.1h1V3.5zM15 3.5a3 3 0 0 1 3 3v.3A3.5 3.5 0 0 1 19.5 10a3.5 3.5 0 0 1-1 6.9 3 3 0 0 1-3 3.1h-1V3.5z"/><path d="M12 4v16" opacity=".5"/></symbol>
+      <symbol id="ic-route" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M5 8c0 6 4 4 4 8s5 2 5-2 5-1 5 4" fill="none" stroke-width="1.6" stroke-linecap="round"/></symbol>
+      <symbol id="ic-wave" viewBox="0 0 24 24"><path d="M2 12h3l2-7 3 14 3-11 2 4h3l2-3" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" fill="none" stroke-width="1.6" stroke-linecap="round"/></symbol>
+      <symbol id="ic-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" stroke-width="1.6"/><circle cx="12" cy="12" r="2.6"/></symbol>
+      <symbol id="ic-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7 3 12h4L5 7zM19 7l-2 5h4l-2-5z" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="ic-pill" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" fill="none" stroke-width="1.6"/><path d="M12 9v6" fill="none" stroke-width="1.6"/></symbol>
+      <symbol id="ic-drop" viewBox="0 0 24 24"><path d="M12 2.5s7 8 7 12.5a7 7 0 0 1-14 0c0-4.5 7-12.5 7-12.5z" fill="none" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+      <symbol id="ic-bot" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="10" rx="2" fill="none" stroke-width="1.6"/><path d="M12 5v4M9 5h6" fill="none" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="14" r="1.2"/><circle cx="15" cy="14" r="1.2"/></symbol>
+      <symbol id="ic-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="none" stroke-width="1.6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" fill="none" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    </defs>
+  </svg>
 
-<script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand magnetic" href="#top" aria-label="Kobe Orteza home">
+        <span class="brand-mark">K</span>
+        <span>Kobe Orteza</span>
+      </a>
 
-let particles = [];
-const colors = ['#00f0ff', '#8b5cf6', '#ffffff'];
-const particleCount = 150;
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#about">About</a>
+      </nav>
 
-// Particle class
-class Particle {
-  constructor() {
-    this.x = Math.random()*canvas.width;
-    this.y = Math.random()*canvas.height;
-    this.size = Math.random()*3 + 1;
-    this.speedX = (Math.random()-0.5)*2;
-    this.speedY = (Math.random()-0.5)*2;
-    this.color = colors[Math.floor(Math.random()*colors.length)];
-  }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-    if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle = this.color;
-    ctx.shadowColor = this.color;
-    ctx.shadowBlur = 12;
-    ctx.fill();
-  }
-}
+      <div class="nav-actions">
+        <a class="nav-cta magnetic" href="#contact">Let's talk <span>↗</span></a>
+        <button class="menu" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-// Initialize particles
-for(let i=0;i<particleCount;i++){
-  particles.push(new Particle());
-}
+  <main id="top">
+    <section class="hero section">
+      <div class="hero-copy">
+        <div class="eyebrow reveal"><i class="pulse-dot"></i>Open to internships · 2026</div>
 
-// Animate particles
-function animate(){
-  ctx.fillStyle = 'rgba(7,7,16,0.25)';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+        <p class="hero-kicker reveal">AI ENGINEERING / SOFTWARE / HARDWARE</p>
 
-  for(let i=0;i<particles.length;i++){
-    particles[i].update();
-    particles[i].draw();
+        <h1 class="hero-title reveal">
+          I build
+          <span class="hero-gradient">intelligent systems</span>
+          that move from idea to reality.
+        </h1>
 
-    // Connect particles
-    for(let j=i;j<particles.length;j++){
-      let dx = particles[i].x - particles[j].x;
-      let dy = particles[i].y - particles[j].y;
-      let distance = Math.sqrt(dx*dx + dy*dy);
-      if(distance < 120){
-        ctx.beginPath();
-        ctx.strokeStyle = 'rgba(0,240,255,' + (1-distance/120) + ')';
-        ctx.lineWidth = 1;
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.stroke();
-      }
-    }
-  }
+        <p class="lede reveal">
+          AI Engineering student building practical software, machine learning workflows, embedded systems, and AI-integrated hardware.
+        </p>
 
-  requestAnimationFrame(animate);
-}
+        <div class="actions reveal">
+          <a class="button primary magnetic" href="#projects">Explore my work <svg><use href="#ic-arrow"/></svg></a>
+          <a class="button secondary magnetic" href="#contact">Talk about an opportunity</a>
+        </div>
 
-animate();
+        <div class="hero-proof reveal">
+          <div class="proof-item">
+            <span class="proof-line"></span>
+            <strong>Builder mindset</strong>
+            <small>Prototype → test → iterate</small>
+          </div>
+          <div class="proof-item">
+            <span class="proof-line"></span>
+            <strong>Cross-disciplinary</strong>
+            <small>Code + circuits + AI</small>
+          </div>
+          <div class="proof-item">
+            <span class="proof-line"></span>
+            <strong>Based in Manila</strong>
+            <small>Philippines</small>
+          </div>
+        </div>
+      </div>
 
-// Portal transition
-const enterBtn = document.getElementById('enterBtn');
-const portal = document.getElementById('portal');
-const card = document.querySelector('.start-card');
+      <div class="hero-stage reveal">
+        <div class="hero-glow"></div>
+        <div class="orbital orbital-one"></div>
+        <div class="orbital orbital-two"></div>
 
-enterBtn.addEventListener('click', () => {
-  portal.classList.add('active');
+        <div class="terminal tilt-card" data-tilt-strength="8">
+          <div class="terminal-bar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span class="terminal-file">developer.ts</span>
+            <span class="terminal-live"><i></i> system online</span>
+          </div>
 
-  // Make particles swirl into portal
-  particles.forEach(p => {
-    const dx = canvas.width/2 - p.x;
-    const dy = canvas.height/2 - p.y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    const angle = Math.atan2(dy, dx);
-    const speed = 4 + Math.random()*2;
+          <div class="terminal-body">
+            <div class="terminal-gutter" aria-hidden="true">01<br>02<br>03<br>04<br>05<br>06<br>07<br>08</div>
+            <div class="code" aria-label="Developer profile snippet">
+              <p><span class="c-muted">// shipping ideas into systems</span></p>
+              <p><span class="c-kw">const</span> developer = {</p>
+              <p>&nbsp;&nbsp;name: <span class="c-str">"Kobe Orteza"</span>,</p>
+              <p>&nbsp;&nbsp;focus: [<span class="c-str">"AI"</span>, <span class="c-str">"ML"</span>, <span class="c-str">"Hardware"</span>],</p>
+              <p>&nbsp;&nbsp;stack: [<span class="c-str">"Python"</span>, <span class="c-str">"C++"</span>, <span class="c-str">"Flutter"</span>],</p>
+              <p>&nbsp;&nbsp;mindset: <span class="c-str">"build &amp; learn"</span>,</p>
+              <p>&nbsp;&nbsp;status: <span class="c-str">"open_to_build"</span></p>
+              <p>}</p>
+            </div>
+          </div>
 
-    let steps = dist / speed;
-    p.speedX = dx / steps;
-    p.speedY = dy / steps;
-  });
+          <div class="terminal-footer">
+            <span>kobe_orteza / portfolio</span>
+            <span class="terminal-command">$ ./build_future</span>
+          </div>
+        </div>
 
-  card.style.transform = 'scale(0.2)';
-  card.style.opacity = '0';
+        <div class="floating-card floating-card-a">
+          <span class="floating-icon cyan"><svg><use href="#ic-brain"/></svg></span>
+          <div><b>AI Systems</b><small>Sense → decide → act</small></div>
+        </div>
 
-  setTimeout(() => { window.location.href = 'main.html'; }, 2000);
-});
+        <div class="floating-card floating-card-b">
+          <span class="floating-icon copper"><svg><use href="#ic-chip"/></svg></span>
+          <div><b>Embedded</b><small>Firmware + hardware</small></div>
+        </div>
+      </div>
 
-// Resize canvas
-window.addEventListener('resize', ()=>{
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-});
-</script>
+      <a class="scroll-cue" href="#projects" aria-label="Scroll to projects">
+        <span>SCROLL TO EXPLORE</span><i></i>
+      </a>
+    </section>
 
+    <section class="section marquee-wrap" aria-label="Areas of expertise">
+      <div class="marquee">
+        <div class="marquee-track">
+          <span>ARTIFICIAL INTELLIGENCE</span><i>✦</i><span>MACHINE LEARNING</span><i>✦</i><span>COMPUTER VISION</span><i>✦</i><span>EMBEDDED SYSTEMS</span><i>✦</i><span>ROBOTICS</span><i>✦</i>
+          <span>ARTIFICIAL INTELLIGENCE</span><i>✦</i><span>MACHINE LEARNING</span><i>✦</i><span>COMPUTER VISION</span><i>✦</i><span>EMBEDDED SYSTEMS</span><i>✦</i><span>ROBOTICS</span><i>✦</i>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section projects">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">01 / Selected work</div>
+        <h2>Projects with a pulse.</h2>
+        <p>AI applications, intelligent mobility, electronics, robotics, and concepts built around real problems.</p>
+      </div>
+
+      <div class="project-stack">
+        <article class="project-card featured reveal tilt-card" data-category="ai">
+          <div class="project-topline"><span>01</span><span>AI APPLICATION</span></div>
+          <div class="project-content">
+            <div class="project-info">
+              <div class="project-icon cyan"><svg><use href="#ic-brain"/></svg></div>
+              <h3>Hiraya</h3>
+              <h4>AI study assistant</h4>
+              <p>A demo AI-powered study app that helps students organize material and get answers through a conversational assistant.</p>
+              <ul class="chips"><li>AI</li><li>Flutter</li><li>Firebase</li></ul>
+              <a class="project-link" href="#contact">Discuss the project <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual ai-visual">
+              <div class="visual-grid"></div>
+              <div class="ai-brain"><svg><use href="#ic-brain"/></svg></div>
+              <div class="signal signal-1"></div><div class="signal signal-2"></div><div class="signal signal-3"></div>
+              <div class="visual-label">CONVERSATIONAL SYSTEM <span>ONLINE</span></div>
+              <div class="visual-stat"><span>Response time</span><strong>0.8s</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="ai">
+          <div class="project-topline"><span>02</span><span>AI + CIVIC TECH</span></div>
+          <div class="project-content reverse">
+            <div class="project-info">
+              <div class="project-icon copper"><svg><use href="#ic-route"/></svg></div>
+              <h3>Kalsada</h3>
+              <h4>AI traffic intelligence</h4>
+              <p>A demo application analyzing transportation data to model congestion and support smarter urban mobility decisions.</p>
+              <ul class="chips"><li>AI</li><li>Django</li><li>Firebase</li></ul>
+              <a class="project-link" href="#contact">Discuss the project <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual route-visual">
+              <div class="route-map" aria-hidden="true">
+                <span class="route-line r1"></span><span class="route-line r2"></span><span class="route-line r3"></span>
+                <span class="route-node n1"></span><span class="route-node n2"></span><span class="route-node n3"></span><span class="route-node n4"></span>
+              </div>
+              <div class="traffic-badge"><i></i> Live traffic model</div>
+              <div class="visual-stat"><span>Traffic index</span><strong>64%</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="hardware">
+          <div class="project-topline"><span>03</span><span>EMBEDDED AUDIO</span></div>
+          <div class="project-content">
+            <div class="project-info">
+              <div class="project-icon copper"><svg><use href="#ic-wave"/></svg></div>
+              <h3>ES9038Q2M DAC</h3>
+              <h4>High-fidelity audio hardware</h4>
+              <p>A hardware build around the ES9038Q2M DAC — firmware, digital audio, and I²C/SPI integration from chip to output stage.</p>
+              <ul class="chips"><li>C</li><li>C++</li><li>I²C</li><li>SPI</li></ul>
+              <a class="project-link" href="#hardware">Open hardware profile <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual audio-visual">
+              <div class="wave-grid"></div>
+              <svg class="big-wave" viewBox="0 0 500 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 L25 70 L35 30 L45 112 L55 52 L65 88 L75 70 L120 70 L130 25 L140 115 L150 48 L160 92 L170 70 L220 70 L230 40 L240 102 L250 62 L260 78 L270 70 L320 70 L330 24 L340 116 L350 55 L360 84 L370 70 L420 70 L430 40 L440 100 L450 62 L460 78 L470 70 L500 70"/></svg>
+              <div class="visual-stat"><span>Digital resolution</span><strong>32-bit</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="robotics">
+          <div class="project-topline"><span>04</span><span>ROBOTICS + SENSING</span></div>
+          <div class="project-content reverse">
+            <div class="project-info">
+              <div class="project-icon copper"><svg><use href="#ic-sun"/></svg></div>
+              <h3>Rice mixer &amp; dryer</h3>
+              <h4>Autonomous solar-powered system</h4>
+              <p>A robotics concept to help Filipino farmers by mixing grain under the sun automatically, with humidity sensing to detect incoming rain.</p>
+              <ul class="chips"><li>Embedded</li><li>Sensors</li><li>Robotics</li></ul>
+              <a class="project-link" href="#contact">Talk through the concept <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual sun-visual">
+              <div class="sun-core"></div>
+              <div class="sun-rays"></div>
+              <div class="sensor-panel">
+                <span>Humidity <b>stable</b></span>
+                <span>Rain risk <b>low</b></span>
+                <span>Solar mode <b>active</b></span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="ai">
+          <div class="project-topline"><span>05</span><span>COMPUTER VISION</span></div>
+          <div class="project-content">
+            <div class="project-info">
+              <div class="project-icon cyan"><svg><use href="#ic-eye"/></svg></div>
+              <h3>Smart campus energy saving system</h3>
+              <h4>AI-driven energy optimization</h4>
+              <p>An ML and computer-vision system using scikit-learn and OpenCV to read visual and environmental data for smarter energy decisions.</p>
+              <ul class="chips"><li>Scikit-learn</li><li>OpenCV</li><li>Computer vision</li></ul>
+              <a class="project-link" href="#contact">Discuss the project <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual vision-visual">
+              <div class="scan-frame"></div>
+              <div class="scan-line"></div>
+              <div class="vision-point p1"></div><div class="vision-point p2"></div><div class="vision-point p3"></div>
+              <div class="vision-label">VISION MODEL / SCANNING</div>
+              <div class="visual-stat"><span>Mode</span><strong>Optimized</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="ai">
+          <div class="project-topline"><span>06</span><span>RESPONSIBLE AI</span></div>
+          <div class="project-content reverse">
+            <div class="project-info">
+              <div class="project-icon cyan"><svg><use href="#ic-scale"/></svg></div>
+              <h3>Ethical AI framework</h3>
+              <h4>Bias detection &amp; model evaluation</h4>
+              <p>A capstone concept for catching dataset and model bias through automated tests, evaluation workflows, and visualizations.</p>
+              <ul class="chips"><li>AI</li><li>Bias detection</li><li>ML evaluation</li></ul>
+              <a class="project-link" href="#contact">Discuss the concept <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual balance-visual">
+              <div class="balance">
+                <span class="balance-beam"></span>
+                <span class="balance-left"></span><span class="balance-right"></span>
+                <span class="balance-dot"></span>
+              </div>
+              <div class="fairness-tags"><span>dataset</span><span>model</span><span>evaluation</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="hardware">
+          <div class="project-topline"><span>07</span><span>CONNECTED HARDWARE</span></div>
+          <div class="project-content">
+            <div class="project-info">
+              <div class="project-icon copper"><svg><use href="#ic-pill"/></svg></div>
+              <h3>Smart medicine pillbox</h3>
+              <h4>Connected medication reminder</h4>
+              <p>A prototype that reminds patients to take medication on time through an automated, connected system. Featured by Explained PH.</p>
+              <ul class="chips"><li>IoT</li><li>Automation</li><li>Healthcare</li></ul>
+              <a class="project-link" href="#contact">Discuss the project <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual pill-visual">
+              <div class="pill-device"><span></span></div>
+              <div class="pill-time"><small>NEXT DOSE</small><strong>08:00</strong></div>
+              <div class="pill-ring"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="research">
+          <div class="project-topline"><span>08</span><span>RENEWABLE ENERGY</span></div>
+          <div class="project-content reverse">
+            <div class="project-info">
+              <div class="project-icon cyan"><svg><use href="#ic-drop"/></svg></div>
+              <h3>Hydro turbine</h3>
+              <h4>Energy from wastewater</h4>
+              <p>Research into micro-hydro turbines as a way to generate renewable energy from wastewater flows.</p>
+              <ul class="chips"><li>Research</li><li>Energy</li><li>Engineering</li></ul>
+              <a class="project-link" href="#contact">Discuss the research <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual hydro-visual">
+              <div class="water-ripple"></div>
+              <div class="turbine"><span></span><span></span><span></span></div>
+              <div class="visual-stat"><span>Flow source</span><strong>Wastewater</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal tilt-card" data-category="robotics">
+          <div class="project-topline"><span>09</span><span>AUTONOMOUS ROBOTICS</span></div>
+          <div class="project-content">
+            <div class="project-info">
+              <div class="project-icon copper"><svg><use href="#ic-bot"/></svg></div>
+              <h3>Sumo bot</h3>
+              <h4>Autonomous competition robot</h4>
+              <p>An autonomous sumo robot designed, built, and programmed for school robotics competitions.</p>
+              <ul class="chips"><li>Robotics</li><li>Control</li><li>Autonomy</li></ul>
+              <a class="project-link" href="#achievements">See competition experience <svg><use href="#ic-arrow"/></svg></a>
+            </div>
+            <div class="project-visual robot-visual">
+              <div class="arena-grid"></div>
+              <div class="bot-shape"><span class="eye"></span><span class="eye"></span></div>
+              <div class="robot-scan"></div>
+              <div class="visual-stat"><span>Mode</span><strong>Autonomous</strong></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="focus" class="section focus">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">02 / How I think</div>
+        <h2>From signal to system.</h2>
+        <p>The common thread across my work is connecting sensing, software, decisions, and action.</p>
+      </div>
+
+      <div class="focus-grid">
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-num">01</span><h3>AI systems</h3>
+          <p>End-to-end intelligent applications connecting models, interfaces, APIs, and real-world data.</p>
+          <div class="focus-code">Input → Model → Decision → Action</div>
+        </article>
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-num">02</span><h3>Machine learning</h3>
+          <p>Data-driven systems, model evaluation, and practical ML workflows built around useful outcomes.</p>
+          <div class="focus-code">Data → Train → Evaluate → Deploy</div>
+        </article>
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-num">03</span><h3>Computer vision</h3>
+          <p>Exploring perception systems that turn visual signals into meaningful software decisions.</p>
+          <div class="focus-code">Pixels → Features → Inference</div>
+        </article>
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-num">04</span><h3>AI + hardware</h3>
+          <p>Bridging intelligent software with embedded systems, sensors, digital audio, and control.</p>
+          <div class="focus-code">Sense → Compute → Control</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section skills">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">03 / Toolkit</div>
+        <h2>Tools I actually use.</h2>
+        <p>A growing stack spanning software engineering, AI/ML, cloud tooling, and embedded work.</p>
+      </div>
+
+      <div class="skill-grid">
+        <article class="skill-group reveal">
+          <div class="skill-head"><span class="skill-index">01</span><h3>Languages</h3></div>
+          <ul><li>C</li><li>C++</li><li>Java</li><li>Python</li><li>JavaScript</li></ul>
+        </article>
+        <article class="skill-group reveal">
+          <div class="skill-head"><span class="skill-index">02</span><h3>Development</h3></div>
+          <ul><li>Flutter</li><li>Django</li><li>Firebase</li><li>REST APIs</li></ul>
+        </article>
+        <article class="skill-group reveal">
+          <div class="skill-head"><span class="skill-index">03</span><h3>Cloud &amp; web</h3></div>
+          <ul><li>Cloudflare</li><li>Vercel</li><li>Firebase</li></ul>
+        </article>
+        <article class="skill-group reveal">
+          <div class="skill-head"><span class="skill-index">04</span><h3>Tools</h3></div>
+          <ul><li>VS Code</li><li>Arduino IDE</li><li>Tinkercad</li><li>Git / GitHub</li><li>Figma</li></ul>
+        </article>
+        <article class="skill-group reveal">
+          <div class="skill-head"><span class="skill-index">05</span><h3>Hardware</h3></div>
+          <ul><li>Arduino</li><li>Raspberry Pi</li><li>ESP32</li><li>Ultrasonic sensors</li><li>Laser sensors</li><li>Embedded C/C++</li><li>I²C</li><li>SPI</li><li>Digital audio</li></ul>
+        </article>
+        <article class="skill-group reveal">
+          <div class="skill-head"><span class="skill-index">06</span><h3>AI / ML</h3></div>
+          <ul><li>Scikit-learn</li><li>OpenCV</li><li>Machine learning</li><li>Image processing</li><li>Image recognition</li><li>Computer vision</li><li>Neural networks</li><li>Model evaluation</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="achievements" class="section achievements">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">04 / Track record</div>
+        <h2>Proof I like building under pressure.</h2>
+        <p>Robotics, innovation, and creative work — the experiences that shaped how I approach engineering problems.</p>
+      </div>
+
+      <div class="achievement-grid">
+        <article class="achievement-feature reveal">
+          <span class="achievement-kicker">COMPETITION EXPERIENCE</span>
+          <h3>Years of building, testing, iterating, and competing under real constraints.</h3>
+          <p>These milestones reflect hands-on engineering rather than just ideas — from autonomous robots to STEM innovation showcases.</p>
+          <div class="achievement-orbit" aria-hidden="true"><div></div><div></div><div></div></div>
+        </article>
+
+        <div class="achievement-list">
+          <div class="achievement-item reveal"><span>2019</span><div><strong>Robotica ng Masa</strong><small>Regional 4th runner-up</small></div><b>↗</b></div>
+          <div class="achievement-item reveal"><span>ROBOTICS</span><div><strong>School-based robotics competitions</strong><small>Sumo Bot champion at Camalaniugan NHS, and other school-level titles</small></div><b>↗</b></div>
+          <div class="achievement-item reveal"><span>DICT</span><div><strong>Division Robotics Competition</strong><small>Champion, laser &amp; ultrasonic sensor category</small></div><b>↗</b></div>
+          <div class="achievement-item reveal"><span>UP STEM</span><div><strong>National STEM Expo</strong><small>Bronze medalist for robotics innovation</small></div><b>↗</b></div>
+          <div class="achievement-item reveal"><span>MEDIA</span><div><strong>Smart medicine pillbox</strong><small>Featured by Explained PH</small></div><b>↗</b></div>
+        </div>
+      </div>
+
+      <div class="other-achievements reveal">
+        <div class="section-eyebrow">Beyond engineering</div>
+        <ul class="other-grid">
+          <li>Poster-making awardee, 2015–2024</li>
+          <li>Mural contest winner, University of Saint Louis Tuguegarao</li>
+          <li>Commissioned station mural for XFM Radio Tuguegarao</li>
+          <li>Cartoonist since 2018, multiple congressional &amp; division-level awards</li>
+          <li>Scrap-making contest winner, senior high</li>
+          <li>Jungle dish gardening contest champion</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="hardware" class="section hardware">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">05 / Hardware lab</div>
+        <h2>Where software touches silicon.</h2>
+        <p>Embedded programming, digital audio, electronics, sensors, and software-to-hardware integration.</p>
+      </div>
+
+      <div class="hardware-panel reveal tilt-card">
+        <div class="hardware-art">
+          <div class="chip-board">
+            <span class="chip-trace t1"></span><span class="chip-trace t2"></span><span class="chip-trace t3"></span><span class="chip-trace t4"></span>
+            <div class="chip-core"><span>ES9038Q2M</span><small>DAC</small></div>
+            <div class="chip-pin p1"></div><div class="chip-pin p2"></div><div class="chip-pin p3"></div><div class="chip-pin p4"></div>
+            <div class="chip-scan"></div>
+          </div>
+        </div>
+        <div class="hardware-info">
+          <div class="hardware-kicker">CURRENT HARDWARE PROJECT</div>
+          <h3>ES9038Q2M DAC</h3>
+          <p>A hardware project exploring embedded programming, digital audio, electronics, and software-to-hardware integration.</p>
+          <div class="specs">
+            <span><b>DAC</b><em>ES9038Q2M</em></span>
+            <span><b>BUS</b><em>I²C / SPI</em></span>
+            <span><b>FIRMWARE</b><em>C / C++</em></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">06 / About</div>
+        <h2>Curious by default. Building on purpose.</h2>
+      </div>
+
+      <div class="about-box reveal">
+        <div class="about-layout">
+          <div class="about-copy">
+            <span class="about-kicker">DEVELOPER &amp; AI ENGINEERING STUDENT</span>
+            <h3>BS Artificial Intelligence Engineering at Mapúa University.</h3>
+            <p>Focused on AI systems, machine learning, neural networks, computer vision, and AI-integrated hardware — with a bias toward learning by building.</p>
+          </div>
+
+          <div class="interest-list">
+            <div><span>01</span><b>AI exploration</b><small>Studying emerging AI tools, ideas, and applications.</small></div>
+            <div><span>02</span><b>Seminars &amp; learning</b><small>Joining AI-related seminars, talks, and learning opportunities.</small></div>
+            <div><span>03</span><b>Solo travel</b><small>Traveling independently and exploring new places and experiences.</small></div>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <span>Focus<b>AI systems, ML, neural networks, AI hardware</b></span>
+          <span>Education<b>BS Artificial Intelligence Engineering, Mapúa</b></span>
+          <span>Based in<b>Manila, Philippines</b></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="contact-card reveal">
+        <div>
+          <div class="section-eyebrow">07 / Contact</div>
+          <h2>Let's build<br><span>something useful.</span></h2>
+          <p>For internships, junior developer opportunities, collaborations, or interesting technical problems — say hello.</p>
+        </div>
+
+        <div class="contact-side">
+          <a class="contact-link magnetic" href="mailto:your@email.com"><span>Email</span><strong>↗</strong></a>
+          <a class="contact-link magnetic" href="https://github.com/" target="_blank" rel="noopener noreferrer"><span>GitHub</span><strong>↗</strong></a>
+          <a class="contact-link magnetic" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><strong>↗</strong></a>
+          <a class="contact-link magnetic" href="#contact" data-placeholder="cv"><span>Download CV</span><strong>↗</strong></a>
+        </div>
+
+        <div class="contact-footer">
+          <span><i></i> Currently open to internships · 2026</span>
+          <span>Manila, PH</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Kobe Orteza</span>
+    <span>Designed &amp; built with code</span>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
