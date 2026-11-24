@@ -3,19 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Kobe Orteza — AI Engineering student building intelligent software, machine learning systems, and AI-integrated hardware.">
+  <meta name="description" content="Kobe Orteza — BS AI Engineering student at Mapúa University building machine-learning systems, computer-vision tools and AI-integrated hardware. Seeking AI/ML and embedded internships for 2026.">
   <meta name="theme-color" content="#070A0F">
   <meta name="color-scheme" content="dark">
-  <title>Kobe Orteza — AI Engineering · Software · Hardware</title>
+  <title>Kobe Orteza — AI Engineering Student · ML, Computer Vision &amp; Hardware</title>
+  <link rel="canonical" href="https://kobeorteza.github.io/">
+  <meta name="author" content="Kobe Orteza">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / social previews (LinkedIn, Messenger, Facebook, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kobeorteza.github.io/">
+  <meta property="og:title" content="Kobe Orteza — AI Engineering Student">
+  <meta property="og:description" content="BS AI Engineering at Mapúa University. Machine learning, computer vision and AI-integrated hardware. Seeking internships for 2026.">
+  <meta property="og:image" content="https://kobeorteza.github.io/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Kobe Orteza — AI Engineering Student portfolio">
+  <meta property="og:site_name" content="Kobe Orteza">
+  <meta property="og:locale" content="en_PH">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kobe Orteza — AI Engineering Student">
+  <meta name="twitter:description" content="Machine learning, computer vision and AI-integrated hardware. Seeking internships for 2026.">
+  <meta name="twitter:image" content="https://kobeorteza.github.io/assets/og-image.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Kobe Orteza",
+    "url": "https://kobeorteza.github.io/",
+    "image": "https://kobeorteza.github.io/assets/og-image.jpg",
+    "jobTitle": "AI Engineering Student",
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Mapúa University" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Manila", "addressCountry": "PH" },
+    "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Computer Vision", "Embedded Systems", "Robotics", "Python", "C++", "OpenCV"]
+  }
+  </script>
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070A0F'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%2357D8CE' stroke-width='2'/%3E%3Cpath d='M10 16h3l2-4 3 8 2-4h2' stroke='%23E0904F' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6">
-  <link rel="stylesheet" href="ai.css?v=6">
-  <link rel="stylesheet" href="fx.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=14">
+  <link rel="stylesheet" href="ai.css?v=14">
+  <link rel="stylesheet" href="fx.css?v=14">
 
   <!-- three.js for the 3D layer (exact version, loaded from jsDelivr) -->
   <script type="importmap">
@@ -70,13 +103,6 @@
     <ul class="build-log-lines" id="build-lines"></ul>
   </div>
 
-  <!-- HUD frame around the viewport -->
-  <div class="hud-frame" aria-hidden="true">
-    <span class="hf-corner tl"></span><span class="hf-corner tr"></span><span class="hf-corner bl"></span><span class="hf-corner br"></span>
-    <div class="hf-read hf-left"><b id="hf-section">SYS/HERO</b><span id="hf-scroll">Y 0000</span></div>
-    <div class="hf-read hf-right"><span id="hf-fps">60 FPS</span><b id="hf-clock">00:00:00</b></div>
-    <div class="hf-ticks" id="hf-ticks"></div>
-  </div>
   <div class="spotlight" aria-hidden="true"></div>
   <div class="toasts" id="toasts" aria-hidden="true"></div>
 
@@ -146,7 +172,7 @@
       <div class="hero-floor" aria-hidden="true"><div class="floor-grid"></div></div>
       <div class="hero-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="hero-copy">
-        <div class="eyebrow hero-in"><i class="pulse-dot"></i>Open to internships · 2026</div>
+        <div class="eyebrow hero-in"><i class="pulse-dot"></i>Seeking AI/ML &amp; embedded internships · 2026</div>
 
         <p class="hero-kicker hero-in">&gt; <span id="role-typer">AI Engineer</span><i class="caret"></i></p>
 
@@ -157,20 +183,21 @@
         </h1>
 
         <p class="lede hero-in">
-          AI Engineering student building practical software, machine learning workflows, embedded systems, and AI-integrated hardware.
+          I'm <strong>Kobe Orteza</strong>, a BS Artificial Intelligence Engineering student at Mapúa University. I build machine-learning systems, computer-vision tools, and AI-integrated hardware, from idea to working prototype.
         </p>
 
         <div class="actions hero-in">
-          <a class="button primary magnetic" href="#projects">Explore my work <svg><use href="#ic-arrow"/></svg></a>
-          <button class="button secondary magnetic" type="button" data-open-chat>
-            <span class="btn-orb"></span> Ask my AI about me
-          </button>
+          <a class="button primary magnetic" href="#projects">View projects <svg><use href="#ic-arrow"/></svg></a>
+          <a class="button secondary magnetic" href="#contact">Contact me</a>
+          <!-- TODO: point this at your CV (e.g. assets/Kobe-Orteza-CV.pdf) and remove data-placeholder -->
+          <a class="button ghost magnetic" href="#contact" data-placeholder="cv"><span>Resume</span> <span aria-hidden="true">↓</span></a>
         </div>
+        <button class="ask-link hero-in" type="button" data-open-chat><span class="btn-orb"></span> Or ask my AI assistant anything about me</button>
 
         <div class="hero-proof hero-in">
-          <div class="proof-item"><span class="proof-line"></span><strong>Builder mindset</strong><small>Prototype → test → iterate</small></div>
-          <div class="proof-item"><span class="proof-line"></span><strong>Cross-disciplinary</strong><small>Code + circuits + AI</small></div>
-          <div class="proof-item"><span class="proof-line"></span><strong>Based in Manila</strong><small>Philippines</small></div>
+          <div class="proof-item"><span class="proof-line"></span><strong>BS AI Engineering</strong><small>Mapúa University</small></div>
+          <div class="proof-item"><span class="proof-line"></span><strong>AI · ML · Hardware</strong><small>Python, C++, OpenCV, ESP32</small></div>
+          <div class="proof-item"><span class="proof-line"></span><strong>Manila, PH</strong><small>Open to internships</small></div>
         </div>
       </div>
 
@@ -186,18 +213,9 @@
         </div>
 
         <div class="hud hud-tl" aria-hidden="true"><i></i><span>SUBJECT</span><b>KOBE ORTEZA</b></div>
-        <div class="hud hud-tr" aria-hidden="true"><i></i><span>ROLE</span><b>AI ENGINEER</b></div>
+        <div class="hud hud-tr" aria-hidden="true"><i></i><span>ROLE</span><b>AI ENGINEERING STUDENT</b></div>
         <div class="hud hud-bl" aria-hidden="true"><i></i><span>STATUS</span><b class="hud-live">● ONLINE</b></div>
-        <div class="hud hud-br" aria-hidden="true"><i></i><span>RENDER</span><b id="holo-count">0 bits</b></div>
 
-        <div class="floating-card floating-card-a" aria-hidden="true">
-          <span class="floating-icon cyan"><svg><use href="#ic-brain"/></svg></span>
-          <div><b>AI Systems</b><small>Sense → decide → act</small></div>
-        </div>
-        <div class="floating-card floating-card-b" aria-hidden="true">
-          <span class="floating-icon copper"><svg><use href="#ic-chip"/></svg></span>
-          <div><b>Embedded</b><small>Firmware + hardware</small></div>
-        </div>
       </div>
 
       <a class="scroll-cue" href="#projects" aria-label="Scroll to projects">
@@ -245,6 +263,10 @@
               <h3>Hiraya</h3>
               <h4>AI study assistant</h4>
               <p>A demo AI-powered study app that helps students organize material and get answers through a conversational assistant.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Students need one place to organize study material and get quick answers.</dd></div>
+                <div><dt>Status</dt><dd>Demo app</dd></div>
+              </dl>
               <ul class="chips"><li>AI</li><li>Flutter</li><li>Firebase</li></ul>
               <button class="project-link" type="button" data-ask="Tell me about Hiraya">Ask my AI about it <svg><use href="#ic-arrow"/></svg></button>
             </div>
@@ -267,6 +289,10 @@
               <h3>Kalsada</h3>
               <h4>AI traffic intelligence</h4>
               <p>A demo application analyzing transportation data to model congestion and support smarter urban mobility decisions.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Urban congestion is hard to plan around without models built from real transportation data.</dd></div>
+                <div><dt>Status</dt><dd>Demo app</dd></div>
+              </dl>
               <ul class="chips"><li>AI</li><li>Django</li><li>Firebase</li></ul>
               <button class="project-link" type="button" data-ask="Tell me about Kalsada">Ask my AI about it <svg><use href="#ic-arrow"/></svg></button>
             </div>
@@ -290,6 +316,10 @@
               <h3>ES9038Q2M DAC</h3>
               <h4>High-fidelity audio hardware</h4>
               <p>A hardware build around the ES9038Q2M DAC — firmware, digital audio, and I²C/SPI integration from chip to output stage.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Getting high-fidelity audio out of a flagship DAC chip means firmware, bus control (I²C/SPI) and a clean output stage working together.</dd></div>
+                <div><dt>Status</dt><dd>Current hardware build</dd></div>
+              </dl>
               <ul class="chips"><li>C</li><li>C++</li><li>I²C</li><li>SPI</li></ul>
               <a class="project-link" href="#hardware">Open hardware profile <svg><use href="#ic-arrow"/></svg></a>
             </div>
@@ -310,6 +340,10 @@
               <h3>Rice mixer &amp; dryer</h3>
               <h4>Autonomous solar-powered system</h4>
               <p>A robotics concept to help Filipino farmers by mixing grain under the sun automatically, with humidity sensing to detect incoming rain.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Sun-drying rice needs constant mixing, and a sudden rain shower can ruin a harvest.</dd></div>
+                <div><dt>Status</dt><dd>Concept</dd></div>
+              </dl>
               <ul class="chips"><li>Embedded</li><li>Sensors</li><li>Robotics</li></ul>
               <button class="project-link" type="button" data-ask="How does the rice mixer and dryer work?">Ask my AI about it <svg><use href="#ic-arrow"/></svg></button>
             </div>
@@ -334,6 +368,10 @@
               <h3>Smart campus energy saving system</h3>
               <h4>AI-driven energy optimization</h4>
               <p>An ML and computer-vision system using scikit-learn and OpenCV to read visual and environmental data for smarter energy decisions.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Campus lights and equipment often run when nobody needs them.</dd></div>
+                <div><dt>Status</dt><dd>ML + computer-vision system</dd></div>
+              </dl>
               <ul class="chips"><li>Scikit-learn</li><li>OpenCV</li><li>Computer vision</li></ul>
               <button class="project-link" type="button" data-ask="Tell me about the smart campus energy saving system">Ask my AI about it <svg><use href="#ic-arrow"/></svg></button>
             </div>
@@ -357,6 +395,10 @@
               <h3>Ethical AI framework</h3>
               <h4>Bias detection &amp; model evaluation</h4>
               <p>A capstone concept for catching dataset and model bias through automated tests, evaluation workflows, and visualizations.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Biased datasets and models can slip into production without anyone noticing.</dd></div>
+                <div><dt>Status</dt><dd>Capstone concept</dd></div>
+              </dl>
               <ul class="chips"><li>AI</li><li>Bias detection</li><li>ML evaluation</li></ul>
               <button class="project-link" type="button" data-ask="What is your ethical AI framework about?">Ask my AI about it <svg><use href="#ic-arrow"/></svg></button>
             </div>
@@ -379,6 +421,10 @@
               <h3>Smart medicine pillbox</h3>
               <h4>Connected medication reminder</h4>
               <p>A prototype that reminds patients to take medication on time through an automated, connected system. Featured by Explained PH.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Patients miss doses when they have to remember medication schedules on their own.</dd></div>
+                <div><dt>Status</dt><dd>Prototype · featured by Explained PH</dd></div>
+              </dl>
               <ul class="chips"><li>IoT</li><li>Automation</li><li>Healthcare</li></ul>
               <button class="project-link" type="button" data-ask="Tell me about the smart medicine pillbox">Ask my AI about it <svg><use href="#ic-arrow"/></svg></button>
             </div>
@@ -398,6 +444,10 @@
               <h3>Hydro turbine</h3>
               <h4>Energy from wastewater</h4>
               <p>Research into micro-hydro turbines as a way to generate renewable energy from wastewater flows.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Wastewater flows carry energy that usually goes unused.</dd></div>
+                <div><dt>Status</dt><dd>Research</dd></div>
+              </dl>
               <ul class="chips"><li>Research</li><li>Energy</li><li>Engineering</li></ul>
               <button class="project-link" type="button" data-ask="Tell me about the hydro turbine research">Ask my AI about it <svg><use href="#ic-arrow"/></svg></button>
             </div>
@@ -417,6 +467,10 @@
               <h3>Sumo bot</h3>
               <h4>Autonomous competition robot</h4>
               <p>An autonomous sumo robot designed, built, and programmed for school robotics competitions.</p>
+              <dl class="case">
+                <div><dt>Challenge</dt><dd>Competition sumo robots must find and push an opponent fully on their own.</dd></div>
+                <div><dt>Status</dt><dd>Competition robot · school champion</dd></div>
+              </dl>
               <ul class="chips"><li>Robotics</li><li>Control</li><li>Autonomy</li></ul>
               <a class="project-link" href="#achievements">See competition experience <svg><use href="#ic-arrow"/></svg></a>
             </div>
@@ -614,7 +668,12 @@
   </main>
 
   <footer>
-    <span>© 2026 Kobe Orteza</span>
+    <span>© 2026 Kobe Orteza · BS AI Engineering, Mapúa University</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
     <span id="footer-build">Built live by kobe.ai as you scrolled</span>
   </footer>
 
@@ -650,16 +709,16 @@
     </form>
   </section>
 
-  <script src="js/hologram-data.js?v=6" defer></script>
+  <script src="js/hologram-data.js?v=14" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="js/sfx.js?v=6" defer></script>
-  <script src="js/main.js?v=6" defer></script>
-  <script src="js/neural-bg.js?v=6" defer></script>
-  <script src="js/hologram.js?v=6" defer></script>
-  <script src="js/ai-builder.js?v=6" defer></script>
-  <script src="js/effects.js?v=6" defer></script>
-  <script src="knowledge.js?v=6" defer></script>
-  <script src="js/chat.js?v=6" defer></script>
-  <script src="js/scene3d.js?v=6" defer></script>
+  <script src="js/sfx.js?v=14" defer></script>
+  <script src="js/main.js?v=14" defer></script>
+  <script src="js/neural-bg.js?v=14" defer></script>
+  <script src="js/hologram.js?v=14" defer></script>
+  <script src="js/ai-builder.js?v=14" defer></script>
+  <script src="js/effects.js?v=14" defer></script>
+  <script src="knowledge.js?v=14" defer></script>
+  <script src="js/chat.js?v=14" defer></script>
+  <script src="js/scene3d.js?v=14" defer></script>
 </body>
 </html>

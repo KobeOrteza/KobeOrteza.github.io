@@ -4,8 +4,8 @@ A futuristic portfolio built with plain HTML, CSS and JavaScript (no framework, 
 
 - **Hologram**: your portrait, cut out of its background with Apple Vision, shown as a crisp cyan duotone with thousands of glowing `0`/`1` bits on top. The bits rain down and lock into place. Every ~7 seconds (and on hover) the photo "decodes" to full clarity. Click to scatter the bits.
 - **Real 3D (three.js + Blender)**: a GPU "data ocean" of ~32k points with a floating wireframe neural core forms the page background and shifts colour as you scroll. The hardware section has a 3D **ES9038Q2M DAC board modelled in Blender** (`tools/blender/dac_board.py`), with glowing traces, bloom, and drag-to-rotate.
-- **Sound design**: every sound is synthesized live with Web Audio (no audio files). It covers boot, hover ticks, clicks, typing, a note per agent, section-deploy chords, a build-complete arpeggio, the hologram scatter, and chat sounds, over a quiet ambient pad. Off by default, with a "turn on" prompt after boot.
-- **AI builder swarm**: four colour-coded agents (`kobe.ai` architect, `pixel.agent` styles, `neuron.agent` logic, `vector.agent` motion) build the page as you scroll. They claim components from a shared queue, type headings, draw blueprint wireframes, fire curved build beams, leave comet trails, and post toasts. They move with spring physics (frame-rate independent), so they glide and tilt instead of jittering. A live roster in the build log shows what each one is doing. On the hero they orbit and "scan" your hologram. Builds are continuous and scrubbed by scroll on every device (phones and tablets too, with compact tags): each component fades, rises and renders top-down while an agent traces its outline. Scrolling back up un-builds it just as smoothly.
+- **Sound design**: every sound is synthesized live with Web Audio (no audio files). It covers boot, hover ticks, clicks, typing, a note per agent, section-deploy chords, a build-complete arpeggio, the hologram scatter, and chat sounds: short, quiet UI sounds with no background music. Off by default, with a "turn on" prompt after boot.
+- **AI builder swarm**: four colour-coded agents (`kobe.ai` architect, `pixel.agent` styles, `neuron.agent` logic, `vector.agent` motion) build the page as you scroll. They claim components from a shared queue, type headings, draw blueprint wireframes, fire curved build beams, leave comet trails, and post toasts. They move with spring physics (frame-rate independent), so they glide and tilt instead of jittering. A live roster in the build log shows what each one is doing. On the hero they orbit and "scan" your hologram. Builds happen in the middle of the screen (each component builds as it passes from ~68% to ~42% of the viewport height), are scrubbed by scroll on every device (phones and tablets too, with compact tags), and are continuous: each component fades, rises and renders top-down while an agent traces its outline. Near the end of the page, builds compress so everything finishes before the bottom. The agents arrive one by one after the hero loads, glide in arcs, and stack their tags so they never overlap.
 - **HUD + effects**: viewport HUD frame (section, scroll Y, FPS, clock, scroll ruler), perspective grid floor, aurora, cursor spotlight grid, animated conic glow borders, giant parallax section numbers, counter-scrolling marquees, click shockwaves, reticle cursor.
 - **kobe.ai chat**: ask anything about Kobe. Answers stream from Claude through a Cloudflare Worker, and the chat falls back to instant offline answers if the worker isn't set up.
 - Boot sequence, neural-network background, skill constellation, self-drawing timeline, cursor particle trail, optional UI sounds.
@@ -75,6 +75,16 @@ Notes:
 - The worker reads `../knowledge.js` when you deploy, so **redeploy after editing it**.
 - Test locally with `npx wrangler dev`, then set `chatEndpoint` to `http://localhost:8787`.
 
+## SEO and social preview
+
+`index.html` has a full meta description, canonical URL, Open Graph and Twitter card tags, and schema.org `Person` data. The share image is `assets/og-image.jpg` (1200×630), rendered from `tools/og/og.html`:
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --user-data-dir="$(mktemp -d)" --hide-scrollbars \
+  --window-size=1200,630 --virtual-time-budget=6000 --screenshot="$PWD/og.png" "file://$PWD/tools/og/og.html"
+sips -s format jpeg -s formatOptions 86 og.png --out assets/og-image.jpg && rm og.png
+```
+
 ## Rebuild the 3D board (Blender)
 
 ```bash
@@ -111,7 +121,7 @@ A portrait with even lighting and your face clearly visible works best.
 
 ## TODO before publishing
 
-- [ ] Replace the placeholder **Email / GitHub / LinkedIn / CV** links in the Contact section of `index.html` (search for `data-placeholder`). Give each link a real `href` and delete its `data-placeholder` attribute.
+- [ ] Replace the placeholder **Email / GitHub / LinkedIn / CV** links (Contact section, plus the hero **Resume** button). Search `index.html` for `data-placeholder`, give each link a real `href`, and delete its `data-placeholder` attribute. Put your CV at e.g. `assets/Kobe-Orteza-CV.pdf`.
 - [ ] Deploy the worker and set `chatEndpoint`
 - [ ] Set `ALLOWED_ORIGINS` to your real domain
 - [ ] Deploy the site (Vercel or Cloudflare Pages: just upload this folder, minus `worker/` and `tools/`)

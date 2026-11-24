@@ -124,13 +124,13 @@
     const rect = frame.getBoundingClientRect();
     W = Math.max(200, rect.width);
     H = Math.max(260, rect.height);
-    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    dpr = Math.min(window.devicePixelRatio || 1, 1.25);
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     // dense grid: the face spans ~45 columns on desktop so features stay readable
-    const cols = W < 330 ? 62 : W < 420 ? 74 : 86;
+    const cols = W < 330 ? 56 : W < 420 ? 64 : 72;
     const imgAspect = DATA.cols / DATA.rows; // width / height of the cropped portrait
     let drawH = H;
     let drawW = drawH * imgAspect;

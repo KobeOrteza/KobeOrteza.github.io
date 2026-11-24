@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Source for assets/og-image.png (1200×630 social preview).
+     Rebuild: see README → "Social preview image". -->
+<html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Space+Grotesk:wght@600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1200px;height:630px;overflow:hidden;background:#070A0F}
+  body{position:relative;font-family:"DM Sans",sans-serif;color:#F4F7FB;
+    background:
+      radial-gradient(circle at 78% 42%,rgba(87,216,206,.22),transparent 38%),
+      radial-gradient(circle at 18% 90%,rgba(155,140,255,.12),transparent 35%),
+      #070A0F}
+  .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(87,216,206,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(87,216,206,.07) 1px,transparent 1px);background-size:40px 40px;-webkit-mask-image:linear-gradient(90deg,#000 30%,transparent 90%)}
+  .copy{position:absolute;left:72px;top:96px;width:640px}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid rgba(148,163,184,.25);border-radius:999px;font:500 15px "IBM Plex Mono",monospace;color:#9fb0c0}
+  .eyebrow i{width:8px;height:8px;border-radius:50%;background:#57D8CE;box-shadow:0 0 12px #57D8CE}
+  h1{margin-top:30px;font:700 86px/0.95 "Space Grotesk",sans-serif;letter-spacing:-.05em}
+  h1 span{background:linear-gradient(90deg,#fff,#57D8CE);-webkit-background-clip:text;color:transparent}
+  p{margin-top:26px;font-size:25px;line-height:1.45;color:#a7b3c2}
+  .tags{display:flex;gap:10px;margin-top:34px}
+  .tags b{padding:9px 14px;border:1px solid rgba(87,216,206,.35);border-radius:10px;font:500 15px "IBM Plex Mono",monospace;color:#bff3ee;background:rgba(87,216,206,.06)}
+  .photo{position:absolute;right:30px;bottom:0;height:600px;filter:drop-shadow(0 0 40px rgba(87,216,206,.35))}
+  .ring{position:absolute;right:120px;bottom:-40px;width:420px;height:90px;border:2px solid rgba(87,216,206,.6);border-radius:50%;box-shadow:0 0 40px rgba(87,216,206,.4)}
+  .url{position:absolute;left:72px;bottom:44px;font:500 17px "IBM Plex Mono",monospace;color:#57D8CE;letter-spacing:.04em}
+</style></head>
+<body>
+  <div class="grid"></div>
+  <div class="ring"></div>
+  <img class="photo" src="../../assets/kobe-holo.png" alt="">
+  <div class="copy">
+    <div class="eyebrow"><i></i>Seeking AI/ML internships · 2026</div>
+    <h1>Kobe Orteza<br><span>AI Engineering</span></h1>
+    <p>BS AI Engineering · Mapúa University<br>Machine learning, computer vision &amp; AI hardware</p>
+    <div class="tags"><b>Python</b><b>C++</b><b>OpenCV</b><b>ESP32</b></div>
+  </div>
+  <div class="url">kobeorteza.github.io</div>
+</body></html>

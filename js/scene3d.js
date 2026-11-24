@@ -142,6 +142,8 @@
     ring2.material.color.set(0x57d8ce);
     ring1.rotation.x = 1.2; ring2.rotation.x = 1.6; ring2.rotation.y = 0.5;
     core.add(wire, inner, nodes, ring1, ring2);
+    const coreMats = [wire.material, inner.material, nodes.material, ring1.material, ring2.material];
+    const coreBase = coreMats.map((m) => m.opacity);
     core.position.set(12, 5.4, -11);
     scene.add(core);
 
@@ -214,6 +216,10 @@
       uniforms.uColB.value.copy(tmpB);
       wire.material.color.copy(tmpA);
 
+      // the core belongs to the hero: fade it out as you scroll into the content
+      const coreFade = 1 - Math.min(1, Math.max(0, (sScroll - 0.04) / 0.1));
+      core.visible = coreFade > 0.01;
+      coreMats.forEach((m, i) => { m.opacity = coreBase[i] * coreFade; });
       core.rotation.y += dt * 0.18;
       core.rotation.x = Math.sin(t * 0.3) * 0.25;
       inner.rotation.y -= dt * 0.5;

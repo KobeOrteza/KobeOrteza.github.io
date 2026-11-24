@@ -44,6 +44,7 @@
     [".project-info h3", "type", 0],
     [".project-info h4", "wire", 0],
     [".project-info > p", "wire", 0],
+    [".case", "wire", 0],
     [".chips li", "wire", 16],
     [".project-link", "wire", 0],
     [".project-visual", "wire", 0],
@@ -158,14 +159,16 @@
     el.style.setProperty("--c-soft", `rgba(${a.rgb},.35)`);
     el.innerHTML = `
       <svg viewBox="0 0 24 24" class="agent-arrow"><path d="M3 2l7.5 19 2.6-7.9L21 10.5z"/></svg>
-      <span class="agent-tag"><i></i><b>${a.id}</b><em></em></span>
-      <pre class="agent-code"></pre>`;
+      <span class="agent-stack"><span class="agent-tag"><i></i><b>${a.id}</b><em></em></span>
+      <pre class="agent-code"></pre></span>`;
     if (layer) layer.appendChild(el);
     return {
       ...a, i, el,
       tagEm: el.querySelector(".agent-tag em"),
       codeEl: el.querySelector(".agent-code"),
       arrow: el.querySelector(".agent-arrow"),
+      tagWrap: el.querySelector(".agent-stack"),
+      tagDy: 0, tagDyShown: 0,
       x: innerWidth * (0.3 + i * 0.12), y: innerHeight + 60, tx: innerWidth * 0.5, ty: innerHeight * 0.5,
       vx: 0, vy: 0, rot: 0, built: 0,
       target: null, trail: [], status: "booting", lastCode: "", lastStatus: "",
@@ -229,6 +232,12 @@
   };
   window.addEventListener("resize", resize, { passive: true });
   resize();
+  let maxScroll = 1;
+  const measureMax = () => { maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight); };
+  measureMax();
+  window.addEventListener("resize", measureMax, { passive: true });
+  window.addEventListener("load", measureMax);
+  if ("ResizeObserver" in window) new ResizeObserver(measureMax).observe(document.body);
 
   let builtCount = 0;
   let allDone = false;
@@ -304,21 +313,36 @@
 
   /* ---------- Main loop ---------- */
   let lastNow = 0;
+  let arriveAt = Infinity;
+  if (KOBE.onBoot) KOBE.onBoot(() => { arriveAt = performance.now() + 1200; });
   const tick = (now) => {
     requestAnimationFrame(tick);
     if (document.hidden) { lastNow = 0; return; }
     const f = lastNow ? Math.min(3, (now - lastNow) / 16.667) : 1; // frame-rate independent physics
     lastNow = now;
     const isMobile = mobile();
-    const START = H * 0.95;
+    const sy = window.scrollY;
+    // Build band in the MIDDLE of the screen: a component starts building when its top
+    // reaches ~68% of the viewport and is finished by ~42% — right where people look.
+    const bandStart = H * (isMobile ? 0.8 : 0.68);
+    const bandEnd = H * (isMobile ? 0.4 : 0.42);
+    const lim = maxScroll - Math.max(48, H * 0.07); // finish a little before the very bottom
 
     // 1) READ — measure everything first (avoids layout thrash)
     for (const t of targets) {
       const r = t.el.getBoundingClientRect();
       t.rect = r;
-      const span = H * (t.kind === "type" ? (isMobile ? 0.26 : 0.32) : (isMobile ? 0.17 : 0.2));
-      let lp = Math.max(0, Math.min(1, (START - (r.top + t.stagger)) / span));
-      t.lp = lp;
+      // work in scroll positions: s0 = scrollY where the build starts, s1 = where it ends
+      const docTop = r.top + sy - (t.offsetY || 0) + t.stagger;
+      const extra = t.kind === "type" ? H * 0.05 : 0;
+      let s0 = docTop - bandStart - extra, s1 = docTop - bandEnd;
+      if (docTop < H * 0.9) { s0 = -2; s1 = -1; }               // visible at load → already built
+      else if (s1 > lim) {                                         // near the page end: the band can't be
+        const len = Math.max(H * 0.14, (s1 - s0) * 0.6);           // reached, so compress the build into
+        s1 = lim;                                                  // the last stretch of scroll
+        s0 = Math.min(s0, s1 - len);
+      }
+      t.lp = Math.max(0, Math.min(1, (sy - s0) / Math.max(1, s1 - s0)));
     }
 
     // 2) WRITE — update build states
@@ -356,14 +380,17 @@
           t.q = q;
           const st = t.el.style;
           if (q >= 1) {
+            t.offsetY = 0;
             st.opacity = ""; st.transform = ""; st.clipPath = ""; st.pointerEvents = "";
           } else if (q <= 0) {
+            t.offsetY = 16;
             st.opacity = "0"; st.transform = "translateY(16px)"; st.clipPath = ""; st.pointerEvents = "none";
           } else {
             const e = 1 - Math.pow(1 - q, 3);
             const fill = Math.min(1, Math.max(0, (q - 0.1) / 0.82));
+            t.offsetY = (1 - e) * 16;
             st.opacity = (0.1 + 0.9 * Math.min(1, q * 1.5)).toFixed(3);
-            st.transform = `translateY(${((1 - e) * 16).toFixed(2)}px)`;
+            st.transform = `translateY(${t.offsetY.toFixed(2)}px)`;
             st.clipPath = `inset(-3px -3px ${((1 - fill) * 100).toFixed(2)}% -3px)`;
             st.pointerEvents = "none";
           }
@@ -427,6 +454,7 @@
     const nextUnbuilt = targets.find((t) => t.state < 2);
     const atTop = window.scrollY < H * 0.3;
     const holo = document.getElementById("holo-frame");
+    const stageEl = document.getElementById("holo-stage");
     agents.forEach((a) => {
       let status, code = "";
       const t = a.target;
@@ -458,8 +486,11 @@
           // on the hero, the crew orbits the hologram, "scanning" it
           const hr = holo.getBoundingClientRect();
           const ang = now / 2600 + a.i * (Math.PI / 2);
-          a.tx = hr.left + hr.width / 2 + Math.cos(ang) * hr.width * 0.58;
+          a.tx = hr.left + hr.width / 2 + Math.cos(ang) * hr.width * 0.5;
           a.ty = hr.top + hr.height * 0.42 + Math.sin(ang) * hr.height * 0.46;
+          // stay inside the hologram's column so tags never cover the headline
+          const sr = stageEl ? stageEl.getBoundingClientRect() : hr;
+          if (W > 1080) a.tx = Math.max(sr.left + 70, Math.min(sr.right - 160, a.tx));
           status = a.i === 0 ? "scroll ↓ we'll build the rest" : ["scanning face mesh", "sampling bits", "calibrating beam"][a.i - 1];
         } else if (a !== lead && lead.target) {
           // support the lead: orbit near it
@@ -476,11 +507,19 @@
       }
 
       if (!t) { a.tx = Math.min(W - 60, Math.max(30, a.tx)); a.ty = Math.min(H - 90, Math.max(80, a.ty)); }
+      // hero choreography: the crew waits off-screen, then flies in one by one
+      if (now < arriveAt + a.i * 170) {
+        a.x = W * 0.5 + (a.i - 1.5) * 70; a.y = H + 50; a.vx = a.vy = 0; a.trail.length = 0;
+      }
       // critically-damped-ish spring: smooth glide, no jitter, settles cleanly
-      const k = (t ? 0.11 : 0.028) * f;
-      const damp = Math.pow(t ? 0.72 : 0.86, f);
-      a.vx = (a.vx + (a.tx - a.x) * k) * damp;
-      a.vy = (a.vy + (a.ty - a.y) * k) * damp;
+      const k = (t ? 0.1 : 0.026) * f;
+      const damp = Math.pow(t ? 0.74 : 0.87, f);
+      const gx = a.tx - a.x, gy = a.ty - a.y;
+      const gd = Math.hypot(gx, gy);
+      // long trips bow into a gentle arc (alternating sides per agent) instead of a straight snap
+      const arc = gd > 70 ? Math.min(gd, 320) * 0.0045 * f * (a.i % 2 ? 1 : -1) / gd : 0;
+      a.vx = (a.vx + gx * k - gy * arc * gd * 0.02) * damp;
+      a.vy = (a.vy + gy * k + gx * arc * gd * 0.02) * damp;
       const sp = Math.hypot(a.vx, a.vy), maxV = (t ? 38 : 14) * f;
       if (sp > maxV) { a.vx *= maxV / sp; a.vy *= maxV / sp; }
       a.x += a.vx * f;
@@ -494,7 +533,7 @@
 
       a.el.style.transform = `translate3d(${(a.x - 3).toFixed(2)}px, ${(a.y - 2).toFixed(2)}px, 0)`;
       a.arrow.style.transform = `rotate(${a.rot.toFixed(2)}deg)`;
-      a.el.classList.toggle("is-on", KOBE.booted);
+      a.el.classList.toggle("is-on", KOBE.booted && now > arriveAt + a.i * 170);
       a.el.classList.toggle("is-working", !!t);
       // only the lead and whoever is typing show a code bubble (keeps the swarm readable)
       a.el.classList.toggle("show-code", !!t && (a.i === 0 || t.kind === "type"));
@@ -539,6 +578,19 @@
           ctx.beginPath(); ctx.arc(bx, by, 1.8 * iu + 0.4, 0, 6.28); ctx.fill();
         }
       }
+    });
+
+    // keep name tags from overlapping: stack any tags that collide, easing into place
+    const order = agents.slice().sort((p, q) => p.y - q.y);
+    order.forEach((a, idx) => {
+      let dy = 0;
+      for (let j = 0; j < idx; j++) {
+        const b = order[j];
+        if (Math.abs(a.x - b.x) < (W < 600 ? 120 : 190) && Math.abs((a.y + dy) - (b.y + b.tagDy)) < 26) dy = b.y + b.tagDy + 26 - a.y;
+      }
+      a.tagDy += (dy - a.tagDy) * Math.min(1, 0.2 * f);
+      const v = Math.round(a.tagDy * 2) / 2;
+      if (v !== a.tagDyShown) { a.tagDyShown = v; a.tagWrap.style.translate = `0 ${v}px`; }
     });
 
     // team links between agents (a little neural mesh)
@@ -586,7 +638,6 @@
     who.built++;
     KOBE.sfx && KOBE.sfx("build", { agent: who.i, step: who.built % 5 });
     if (t.name) {
-      toast(`<b>✓</b> <span class="who">${who.id}</span> compiled projects/${t.name}.tsx`, who.rgb);
       log(`<b style="color:rgb(${who.rgb})">✓</b> ${t.name}.tsx <em>${Math.round(120 + Math.random() * 280)}ms</em>`);
     } else if (Math.random() < 0.3) {
       log(`<b style="color:rgb(${who.rgb})">+</b> ${esc(t.sel)}`);

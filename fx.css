@@ -363,3 +363,80 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
 .lenis.lenis-stopped{overflow:hidden}
+
+/* =========================================================
+   v5 — professional finish: calmer palette, recruiter-first hero,
+   case studies, refined motion
+   ========================================================= */
+/* calmer: fewer competing glows so the content leads */
+.hero-gradient{background:linear-gradient(90deg,#ffffff 0%,#bff3ee 40%,#57D8CE 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;animation:gradientShift 9s ease-in-out infinite}
+.hero-aurora{opacity:.45}
+section[data-num]::before{-webkit-text-stroke:1px rgba(87,216,206,.08);background:none}
+.spotlight{background-image:linear-gradient(rgba(87,216,206,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(87,216,206,.08) 1px,transparent 1px)}
+.hero-floor{opacity:.55}
+.build-log-lines{display:none}
+.build-log{width:250px}
+
+/* hero hierarchy */
+.lede{font-size:clamp(1rem,1.25vw,1.12rem);line-height:1.7;max-width:56ch;color:#a7b3c2}
+.lede strong{color:var(--text);font-weight:600}
+.actions{gap:12px}
+.button{border-radius:12px;letter-spacing:.005em;transition:transform .35s var(--ease),background .3s ease,border-color .3s ease,box-shadow .35s ease}
+.button.ghost{background:transparent;border-color:transparent;color:#c9d6e2;padding-left:10px;padding-right:10px}
+.button.ghost:hover{color:var(--text);border-color:var(--line-strong)}
+.ask-link{display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:6px 0;color:#8fa1b4;font:500 .82rem var(--body);transition:color .25s ease}
+.ask-link:hover{color:var(--cyan)}
+.hero-proof strong{font-size:.92rem}
+.hero-proof small{font-family:var(--mono);font-size:.7rem;letter-spacing:.02em}
+
+/* project case studies */
+.case{display:grid;gap:10px;margin:18px 0 0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.018)}
+.case > div{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:baseline}
+.case dt{color:var(--cyan);font:500 .64rem var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.case dd{margin:0;color:#b9c4d1;font-size:.88rem;line-height:1.55}
+.case > div + div{padding-top:10px;border-top:1px solid var(--line)}
+.project-info p{line-height:1.7}
+.project-info h3{letter-spacing:-.045em}
+
+/* cards respond to hover with a soft lift (magnetic tilt stays on the card) */
+.project-visual{transition:transform .6s var(--ease),border-color .4s ease,box-shadow .6s var(--ease)}
+.project-card:hover .project-visual{transform:translateZ(24px) translateY(-6px);box-shadow:inset 0 0 60px rgba(0,0,0,.16),0 34px 80px rgba(0,0,0,.32),0 0 40px rgba(87,216,206,.08)}
+.focus-card,.skill-group,.achievement-item{transition:transform .5s var(--ease),border-color .4s ease,background .4s ease}
+.achievement-item:hover{transform:translateX(4px)}
+
+/* type scale + rhythm */
+body{font-size:16.5px}
+.section-head{margin-bottom:52px}
+.section-head p{line-height:1.7;color:#9aa7b7}
+.section-eyebrow{font-size:.7rem}
+
+@media (max-width:800px){
+  .case > div{grid-template-columns:1fr;gap:4px}
+  .ask-link{font-size:.78rem}
+  .build-log{width:auto}
+}
+@media (max-width:580px){
+  .actions{display:grid;grid-template-columns:1fr 1fr}
+  .actions .button.primary{grid-column:1 / -1}
+  .button{width:auto}
+  .button.ghost{border-color:var(--line)}
+}
+footer{align-items:center;flex-wrap:wrap}
+.footer-links{display:flex;gap:18px}
+.footer-links a{color:#7d8b9c;transition:color .2s}
+.footer-links a:hover{color:var(--cyan)}
+/* hero fits above the fold: headline, intro and actions visible on a laptop screen */
+.hero{padding-top:48px;padding-bottom:64px;gap:48px}
+.hero-title{font-size:clamp(2.8rem,4.9vw,5.1rem);line-height:.96;max-width:14ch}
+.eyebrow{margin-bottom:16px}
+.hero-kicker{margin-bottom:10px}
+.lede{margin-top:20px}
+.actions{margin-top:24px}
+.hero-proof{margin-top:30px}
+.holo-stage{min-height:600px}
+@media (max-width:1080px){.hero-title{font-size:clamp(2.8rem,8vw,4.6rem)}}
+@media (max-width:580px){.hero-title{font-size:clamp(2.5rem,11.5vw,3.4rem)}}
+/* parallax numerals must never extend the page (they drift down as you scroll) */
+section[data-num]{overflow-y:clip;overflow-clip-margin:24px}
+/* letter-split headings: only the original second-line span is muted, not every letter */
+.contact-card h2 .word,.contact-card h2 .ch{color:inherit}
