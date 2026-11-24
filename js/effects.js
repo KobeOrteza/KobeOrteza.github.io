@@ -339,4 +339,56 @@
       if (!raf && parts.length) raf = requestAnimationFrame(loop);
     }, { passive: true });
   }
+
+  /* ================= Scroll-reactive marquees ================= */
+  // the two banners drift on their own and speed up (and lean) with your scroll velocity
+  const rows = [...document.querySelectorAll(".marquee .marquee-track")];
+  if (rows.length && !reduceMotion) {
+    const state = rows.map((el, i) => ({ el, x: 0, dir: i % 2 ? 1 : -1, half: 0 }));
+    const measure = () => state.forEach((r) => { r.half = r.el.scrollWidth / 2; });
+    measure();
+    window.addEventListener("resize", measure, { passive: true });
+    window.addEventListener("load", measure);
+    rows.forEach((el) => { el.style.animation = "none"; });
+    let lastY = scrollY, vel = 0, vis = true, last = 0;
+    const wrap = document.querySelector(".marquee-wrap");
+    if (wrap && "IntersectionObserver" in window) new IntersectionObserver(([e]) => { vis = e.isIntersecting; }).observe(wrap);
+    const tickM = (now) => {
+      requestAnimationFrame(tickM);
+      const dt = last ? Math.min(50, now - last) : 16; last = now;
+      const y = scrollY;
+      vel += ((y - lastY) / Math.max(1, dt) - vel) * 0.12;
+      lastY = y;
+      if (!vis || document.hidden) return;
+      const speed = 0.045 + Math.min(1.6, Math.abs(vel) * 0.55);
+      state.forEach((r) => {
+        if (!r.half) return;
+        r.x += r.dir * speed * dt * (vel < 0 ? -1 : 1);
+        if (r.x <= -r.half) r.x += r.half;
+        if (r.x > 0) r.x -= r.half;
+        r.el.style.transform = `translate3d(${r.x.toFixed(2)}px,0,0) skewX(${Math.max(-8, Math.min(8, -vel * 3)).toFixed(2)}deg)`;
+      });
+    };
+    requestAnimationFrame(tickM);
+  }
+
+  /* ================= Parallax on project visuals ================= */
+  // uses the independent `translate` property so it never fights the builder's or hover's transforms
+  const visuals = [...document.querySelectorAll(".project-visual")];
+  if (visuals.length && !reduceMotion) {
+    let pTick = false;
+    const run = () => {
+      pTick = false;
+      const h = innerHeight;
+      const rects = visuals.map((v) => v.getBoundingClientRect());
+      visuals.forEach((v, i) => {
+        const r = rects[i];
+        if (r.bottom < -100 || r.top > h + 100) return;
+        const off = ((r.top + r.height / 2) - h / 2) / h;
+        v.style.translate = `0 ${(off * -26).toFixed(1)}px`;
+      });
+    };
+    window.addEventListener("scroll", () => { if (!pTick) { pTick = true; requestAnimationFrame(run); } }, { passive: true });
+    run();
+  }
 })();

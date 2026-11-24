@@ -322,31 +322,61 @@
     lastNow = now;
     const isMobile = mobile();
     const sy = window.scrollY;
-    // Build band in the MIDDLE of the screen: a component starts building when its top
-    // reaches ~68% of the viewport and is finished by ~42% — right where people look.
-    const bandStart = H * (isMobile ? 0.8 : 0.68);
-    const bandEnd = H * (isMobile ? 0.4 : 0.42);
-    const lim = maxScroll - Math.max(48, H * 0.07); // finish a little before the very bottom
+    const dtS = Math.min(0.05, f / 60);
+    const atBottom = sy >= maxScroll - 6;
+    // a component is "queued" once it rises past this line; agents then build it over time,
+    // even after the visitor stops scrolling
+    const trigLine = H * (isMobile ? 0.9 : 0.85);
 
     // 1) READ — measure everything first (avoids layout thrash)
     for (const t of targets) {
       const r = t.el.getBoundingClientRect();
       t.rect = r;
-      // work in scroll positions: s0 = scrollY where the build starts, s1 = where it ends
-      const docTop = r.top + sy - (t.offsetY || 0) + t.stagger;
-      const extra = t.kind === "type" ? H * 0.05 : 0;
-      let s0 = docTop - bandStart - extra, s1 = docTop - bandEnd;
-      if (docTop < H * 0.9) { s0 = -2; s1 = -1; }               // visible at load → already built
-      else if (s1 > lim) {                                         // near the page end: the band can't be
-        const len = Math.max(H * 0.14, (s1 - s0) * 0.6);           // reached, so compress the build into
-        s1 = lim;                                                  // the last stretch of scroll
-        s0 = Math.min(s0, s1 - len);
+      if (t.p === undefined) {
+        const docTop = r.top + sy;
+        t.p = docTop < H * 0.9 ? 1 : 0;           // visible at load → already built
+        t.trig = t.p === 1;
       }
-      t.lp = Math.max(0, Math.min(1, (sy - s0) / Math.max(1, s1 - s0)));
+      if (t.p >= 1) continue;
+      if (!t.trig && (r.top + t.stagger * 0.4 < trigLine || (atBottom && r.top < H))) {
+        t.trig = true;
+        t.trigAt = now;
+        const area = Math.min(1, (r.width * r.height) / (W * H));
+        t.dur = t.kind === "type"
+          ? Math.min(1.5, 0.3 + t.chars.length * 0.03)
+          : (r.height < 44 ? 0.32 : 0.6 + area * 1.6);
+      }
+      // anything the reader has already scrolled up to is finished instantly — never half-built text
+      if (t.trig && r.top < H * 0.12) t.p = 1;
     }
 
-    // 2) WRITE — update build states
-    const active = [];
+    // 2) ASSIGN — agents keep their job until it's done, then take the next queued component
+    const pending = targets.filter((t) => t.trig && t.p < 1);
+    const claimed = new Set();
+    agents.forEach((a) => {
+      if (a.target && a.target.p < 1) claimed.add(a.target);
+      else a.target = null;
+    });
+    const crewReady = KOBE.booted && now > arriveAt;
+    if (crewReady && layer) {
+      agents.forEach((a) => {
+        if (a.target) return;
+        const job = pending.find((t) => !claimed.has(t) && t.rect.bottom > 0 && t.rect.top < H);
+        if (job) { a.target = job; claimed.add(job); job.agent = a; KOBE.sfx && KOBE.sfx("claim", { agent: a.i }); }
+      });
+    }
+    // 3) PROGRESS — owned jobs advance at their own pace; a backlog makes the crew work faster,
+    //    and anything waiting too long builds itself so content is never stuck
+    const boost = 1 + Math.min(3, Math.max(0, pending.length - agents.length) * 0.3);
+    for (const t of pending) {
+      const owned = claimed.has(t);
+      const waited = now - (t.trigAt || now);
+      if (owned || waited > 1100 || !crewReady) t.p = Math.min(1, t.p + (dtS / t.dur) * boost * (owned ? 1 : 0.7));
+      t.lp = t.p;
+    }
+    for (const t of targets) if (t.p >= 1) t.lp = 1; else if (!t.trig) t.lp = 0;
+
+    // 4) WRITE — update build states
     for (const t of targets) {
       const lp = t.lp;
       if (t.kind === "type") {
@@ -402,24 +432,10 @@
           t.state = state;
         }
       }
-      if (lp > 0 && lp < 1 && t.rect.bottom > 0 && t.rect.top < H) active.push(t);
     }
 
     updateProgress();
     if (!layer || !ctx) return;
-
-    // 3) Assign work: agents keep their current job if it's still in progress,
-    //    otherwise grab the earliest unclaimed component.
-    const claimed = new Set();
-    agents.forEach((a) => {
-      if (a.target && active.includes(a.target)) claimed.add(a.target);
-      else a.target = null;
-    });
-    agents.forEach((a) => {
-      if (a.target) return;
-      const job = active.find((t) => !claimed.has(t));
-      if (job) { a.target = job; claimed.add(job); job.agent = a; KOBE.sfx && KOBE.sfx("claim", { agent: a.i }); }
-    });
 
     ctx.clearRect(0, 0, W, H);
 
@@ -446,12 +462,20 @@
       const owner = agents.find((a) => a.target === t);
       const rgb = owner ? owner.rgb : "87,216,206";
       if (t.kind === "wire" && t.lp > 0 && t.lp < 1) drawFrame(r, t.lp * 1.15, t.sel, rgb, now, 0);
+      else if (t.trig && t.p === 0 && r.height > 28) {
+        // queued: a faint dashed placeholder so you can see what the crew will build next
+        ctx.save();
+        ctx.setLineDash([2, 6]);
+        ctx.lineDashOffset = -now / 60;
+        ctx.strokeStyle = "rgba(87,216,206,.16)";
+        ctx.strokeRect(r.left + 0.5, r.top + 0.5, r.width - 1, r.height - 1);
+        ctx.restore();
+      }
       else if (t.builtAt && now - t.builtAt < 450) drawFrame(r, 1, t.sel, (t.agent || agents[0]).rgb, now, (1 - (now - t.builtAt) / 450) * 0.9);
     }
 
     // 4) Move agents
     const lead = agents[0];
-    const nextUnbuilt = targets.find((t) => t.state < 2);
     const atTop = window.scrollY < H * 0.3;
     const holo = document.getElementById("holo-frame");
     const stageEl = document.getElementById("holo-stage");
@@ -474,39 +498,29 @@
           code = describe(t);
         }
       } else {
-        // idle behaviour
-        if (now > a.idleSwap) { a.idleText = a.idle[(Math.random() * a.idle.length) | 0]; a.idleSwap = now + 2500 + Math.random() * 2500; }
-        const wob = now / 900 + a.idleSeed;
-        if (!nextUnbuilt) {
-          // build complete: agents gather bottom-right in a little formation
-          a.tx = W - 160 - (a.i % 2) * 70 + Math.sin(wob) * 8;
-          a.ty = H - 200 + Math.floor(a.i / 2) * 46 + Math.cos(wob) * 6;
-          status = a.i === 0 ? "build complete ✓" : "standing by";
-        } else if (atTop && holo) {
-          // on the hero, the crew orbits the hologram, "scanning" it
+        // idle: with nothing queued, the crew docks at the side of the screen and rests
+        if (now > a.idleSwap) { a.idleText = a.idle[(Math.random() * a.idle.length) | 0]; a.idleSwap = now + 3000 + Math.random() * 3000; }
+        const wob = now / 1100 + a.idleSeed;
+        const inHero = atTop && holo && !pending.length;
+        if (inHero) {
+          // on the hero, the crew slowly orbits the hologram, "scanning" it
           const hr = holo.getBoundingClientRect();
-          const ang = now / 2600 + a.i * (Math.PI / 2);
+          const ang = now / 3200 + a.i * (Math.PI / 2);
           a.tx = hr.left + hr.width / 2 + Math.cos(ang) * hr.width * 0.5;
           a.ty = hr.top + hr.height * 0.42 + Math.sin(ang) * hr.height * 0.46;
-          // stay inside the hologram's column so tags never cover the headline
           const sr = stageEl ? stageEl.getBoundingClientRect() : hr;
           if (W > 1080) a.tx = Math.max(sr.left + 70, Math.min(sr.right - 160, a.tx));
           status = a.i === 0 ? "scroll ↓ we'll build the rest" : ["scanning face mesh", "sampling bits", "calibrating beam"][a.i - 1];
-        } else if (a !== lead && lead.target) {
-          // support the lead: orbit near it
-          const ang = wob * 0.8 + a.i * 2.1;
-          a.tx = lead.x + Math.cos(ang) * (90 + a.i * 18);
-          a.ty = lead.y + Math.sin(ang) * (60 + a.i * 10);
-          status = a.idleText;
         } else {
-          const r = nextUnbuilt.rect;
-          a.tx = Math.min(W - 80, Math.max(40, r.left + 40 + a.i * 60)) + Math.sin(wob) * 10;
-          a.ty = Math.min(H - 80, Math.max(90, Math.min(r.top, H - 90) - 40 - a.i * 14)) + Math.cos(wob) * 8;
-          status = a.i === 0 ? "waiting for scroll…" : a.idleText;
+          const narrow = W < 600;
+          a.tx = W - (narrow ? 26 : 46) + Math.sin(wob * 0.8) * 2.5;
+          a.ty = H * (narrow ? 0.36 : 0.32) + a.i * (narrow ? 34 : 46) + Math.cos(wob) * 3.5;
+          status = allDone ? (a.i === 0 ? "build complete ✓" : "resting") : (pending.length ? "on standby" : "resting · " + a.idleText);
         }
+        a.docked = !inHero;
       }
 
-      if (!t) { a.tx = Math.min(W - 60, Math.max(30, a.tx)); a.ty = Math.min(H - 90, Math.max(80, a.ty)); }
+      if (!t) { a.tx = Math.min(W - 18, Math.max(30, a.tx)); a.ty = Math.min(H - 90, Math.max(80, a.ty)); }
       // hero choreography: the crew waits off-screen, then flies in one by one
       if (now < arriveAt + a.i * 170) {
         a.x = W * 0.5 + (a.i - 1.5) * 70; a.y = H + 50; a.vx = a.vy = 0; a.trail.length = 0;
@@ -535,6 +549,7 @@
       a.arrow.style.transform = `rotate(${a.rot.toFixed(2)}deg)`;
       a.el.classList.toggle("is-on", KOBE.booted && now > arriveAt + a.i * 170);
       a.el.classList.toggle("is-working", !!t);
+      a.el.classList.toggle("docked", !t && !!a.docked);
       // only the lead and whoever is typing show a code bubble (keeps the swarm readable)
       a.el.classList.toggle("show-code", !!t && (a.i === 0 || t.kind === "type"));
       a.el.classList.toggle("flip", a.x > W - Math.min(300, W * 0.48));
@@ -645,6 +660,7 @@
     if (!sec.done && sec.built >= sec.total) {
       sec.done = true;
       sec.deployedAt = now || performance.now();
+      sec.el.classList.add("deployed");
       toast(`<b>⬢</b> crew deployed ${sec.name}`, "87,216,206", true);
       log(`<b>⬢</b> deployed ${sec.name}`);
       KOBE.sfx && KOBE.sfx("deploy");
@@ -664,6 +680,7 @@
     lastPct = pct;
     const mods = sectionInfo.filter((s) => s.done).length;
     if (pctEl) pctEl.textContent = `${pct}%`;
+    if (logEl) logEl.style.setProperty("--pct", pct);
     if (barEl) barEl.style.width = `${pct}%`;
     if (metaEl) metaEl.textContent = `${mods}/${sectionInfo.length} modules · ${builtCount}/${targets.length} components · ${agents.length} agents`;
     if (logEl) logEl.classList.toggle("done", pct >= 100);

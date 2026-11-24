@@ -66,7 +66,8 @@
       uMouse: { value: new THREE.Vector2(0, 0) },
       uColA: { value: new THREE.Color(0x57d8ce) },
       uColB: { value: new THREE.Color(0x9b8cff) },
-      uPixel: { value: renderer.getPixelRatio() }
+      uPixel: { value: renderer.getPixelRatio() },
+      uRip: { value: [new THREE.Vector3(0, 0, -99), new THREE.Vector3(0, 0, -99), new THREE.Vector3(0, 0, -99)] }
     };
     const ocean = new THREE.Points(oceanGeo, new THREE.ShaderMaterial({
       uniforms,
@@ -76,6 +77,7 @@
       vertexShader: /* glsl */`
         uniform float uTime, uScroll, uPixel;
         uniform vec2 uMouse;
+        uniform vec3 uRip[3];
         varying float vH;
         varying float vFade;
         void main(){
@@ -88,6 +90,15 @@
           // ripple around the projected mouse point
           float d = distance(p.xz, uMouse * vec2(14.0, 9.0) + vec2(0.0, 4.0));
           h += sin(d * 1.4 - uTime * 3.0) * 0.35 * exp(-d * 0.18);
+          // expanding pulse rings (data "drops" landing on the ocean)
+          for (int i = 0; i < 3; i++) {
+            float age = uTime - uRip[i].z;
+            if (age > 0.0 && age < 7.0) {
+              float rd = distance(p.xz, uRip[i].xy);
+              float ring = exp(-pow(rd - age * 3.2, 2.0) * 0.5) * exp(-age * 0.45);
+              h += ring * 0.75;
+            }
+          }
           p.y = h - 2.2;
           vH = h;
           vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -162,6 +173,96 @@
     }));
     scene.add(dust);
 
+    const lite = small() || lowEnd;
+
+    /* --- nebula: soft animated clouds far behind everything --- */
+    const nebulaU = { uTime: { value: 0 }, uColA: { value: new THREE.Color(0x57d8ce) }, uColB: { value: new THREE.Color(0x9b8cff) }, uScroll: { value: 0 } };
+    const nebula = new THREE.Mesh(new THREE.PlaneGeometry(160, 90), new THREE.ShaderMaterial({
+      uniforms: nebulaU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+      fragmentShader: /* glsl */`
+        uniform float uTime, uScroll;
+        uniform vec3 uColA, uColB;
+        varying vec2 vUv;
+        float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+        float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
+          return mix(mix(h(i), h(i+vec2(1,0)), f.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), f.x), f.y); }
+        float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++){ v += a * n(p); p *= 2.03; a *= 0.5; } return v; }
+        void main(){
+          vec2 p = vUv * vec2(6.0, 3.4) + vec2(uTime * 0.012, -uScroll * 1.2);
+          float c = fbm(p + fbm(p * 1.7 + uTime * 0.02));
+          float c2 = fbm(p * 0.6 - uTime * 0.008);
+          vec3 col = mix(uColA, uColB, c2) * smoothstep(0.42, 0.95, c);
+          float edge = smoothstep(0.0, 0.25, vUv.y) * smoothstep(1.0, 0.6, vUv.y);
+          gl_FragColor = vec4(col, 0.16 * edge);
+        }`
+    }));
+    nebula.position.set(0, 6, -42);
+    nebula.renderOrder = -2;
+    scene.add(nebula);
+
+    /* --- falling data streaks at different depths --- */
+    const STREAKS = lite ? 28 : 70;
+    const streakGeo = new THREE.InstancedBufferGeometry();
+    streakGeo.index = new THREE.PlaneGeometry(1, 1).index;
+    streakGeo.setAttribute("position", new THREE.PlaneGeometry(0.035, 1.6).getAttribute("position"));
+    streakGeo.setAttribute("uv", new THREE.PlaneGeometry(0.035, 1.6).getAttribute("uv"));
+    const sOff = new Float32Array(STREAKS * 3), sSpd = new Float32Array(STREAKS), sHue = new Float32Array(STREAKS);
+    for (let i = 0; i < STREAKS; i++) {
+      sOff[i * 3] = (Math.random() - 0.5) * 50;
+      sOff[i * 3 + 1] = Math.random() * 30;
+      sOff[i * 3 + 2] = -6 - Math.random() * 26;
+      sSpd[i] = 0.8 + Math.random() * 2.2;
+      sHue[i] = Math.random();
+    }
+    streakGeo.setAttribute("aOff", new THREE.InstancedBufferAttribute(sOff, 3));
+    streakGeo.setAttribute("aSpd", new THREE.InstancedBufferAttribute(sSpd, 1));
+    streakGeo.setAttribute("aHue", new THREE.InstancedBufferAttribute(sHue, 1));
+    streakGeo.instanceCount = STREAKS;
+    const streakU = { uTime: { value: 0 }, uColA: nebulaU.uColA, uColB: nebulaU.uColB, uScroll: { value: 0 } };
+    const streaks = new THREE.Mesh(streakGeo, new THREE.ShaderMaterial({
+      uniforms: streakU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: /* glsl */`
+        attribute vec3 aOff; attribute float aSpd, aHue;
+        uniform float uTime, uScroll;
+        varying vec2 vUv; varying float vHue, vDepth;
+        void main(){
+          vUv = uv; vHue = aHue;
+          vec3 p = position + aOff;
+          p.y = mod(aOff.y - uTime * aSpd - uScroll * 18.0, 30.0) - 8.0 + position.y;
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          vDepth = smoothstep(34.0, 8.0, -mv.z);
+          gl_Position = projectionMatrix * mv;
+        }`,
+      fragmentShader: /* glsl */`
+        uniform vec3 uColA, uColB;
+        varying vec2 vUv; varying float vHue, vDepth;
+        void main(){
+          float a = pow(vUv.y, 2.2) * (1.0 - abs(vUv.x - 0.5) * 2.0);
+          gl_FragColor = vec4(mix(uColA, uColB, vHue), a * 0.55 * vDepth);
+        }`
+    }));
+    streaks.frustumCulled = false;
+    scene.add(streaks);
+
+    /* --- floating wireframe shapes drifting through the depth --- */
+    const shapeDefs = [
+      [new THREE.OctahedronGeometry(1.1, 0), [-11, 3, -16], 0.9],
+      [new THREE.TorusKnotGeometry(0.9, 0.22, 64, 8), [10, -1, -20], 0.6],
+      [new THREE.TetrahedronGeometry(1.2, 0), [-7, -3, -24], 1.2],
+      [new THREE.IcosahedronGeometry(1.3, 0), [14, 7, -26], 0.7],
+      [new THREE.TorusGeometry(1.2, 0.02, 6, 48), [-14, 9, -22], 1.0]
+    ].slice(0, lite ? 3 : 5);
+    const shapes = shapeDefs.map(([geo, pos, spin], i) => {
+      const mat = new THREE.LineBasicMaterial({ color: i % 2 ? 0x9b8cff : 0x57d8ce, transparent: true, opacity: 0.22, blending: THREE.AdditiveBlending, depthWrite: false });
+      const m = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 1), mat);
+      m.position.set(...pos);
+      m.userData = { base: pos, spin, phase: Math.random() * 6.28 };
+      scene.add(m);
+      return m;
+    });
+    let nextRipple = 0, ripIdx = 0;
+
     /* --- palette per scroll position: cyan → violet → copper → cyan --- */
     const stops = [
       [0x57d8ce, 0x9b8cff],
@@ -186,6 +287,11 @@
     document.documentElement.classList.add("has-3d");
 
     let smx = 0, smy = 0, sScroll = 0;
+    let maxScroll = 1;
+    const measureMax = () => { maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight); };
+    measureMax();
+    window.addEventListener("resize", measureMax, { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(measureMax).observe(document.body);
     let running = true;
     let frames = 0, fpsT = performance.now(), downgraded = 0;
     const clock = new THREE.Clock();
@@ -196,8 +302,7 @@
       if (document.hidden) return;
       const dt = Math.min(clock.getDelta(), 0.05);
       const t = clock.elapsedTime;
-      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      const sp = scrollY / max;
+      const sp = scrollY / maxScroll;
       sScroll += (sp - sScroll) * 0.08;
       const m = KOBE.mouse || { x: innerWidth / 2, y: innerHeight / 2 };
       smx += ((m.x / innerWidth) * 2 - 1 - smx) * 0.05;
@@ -217,7 +322,9 @@
       wire.material.color.copy(tmpA);
 
       // the core belongs to the hero: fade it out as you scroll into the content
-      const coreFade = 1 - Math.min(1, Math.max(0, (sScroll - 0.04) / 0.1));
+      const coreFade = innerWidth < 1081
+        ? (1 - Math.min(1, Math.max(0, (sScroll - 0.004) / 0.03))) * 0.75   // stacked layouts: gone before the intro text
+        : 1 - Math.min(1, Math.max(0, (sScroll - 0.04) / 0.1));
       core.visible = coreFade > 0.01;
       coreMats.forEach((m, i) => { m.opacity = coreBase[i] * coreFade; });
       core.rotation.y += dt * 0.18;
@@ -233,6 +340,25 @@
       core.position.z = narrow ? -13 : -11;
       dust.rotation.y = t * 0.02;
       dust.position.y = -sScroll * 4;
+
+      nebulaU.uTime.value = t;
+      nebulaU.uScroll.value = sScroll;
+      nebulaU.uColA.value.copy(tmpA);
+      nebulaU.uColB.value.copy(tmpB);
+      streakU.uTime.value = t;
+      streakU.uScroll.value = sScroll;
+      shapes.forEach((m) => {
+        const { base, spin, phase } = m.userData;
+        m.rotation.x += dt * 0.12 * spin;
+        m.rotation.y += dt * 0.18 * spin;
+        m.position.x = base[0] + Math.sin(t * 0.15 + phase) * 1.4;
+        m.position.y = base[1] + Math.cos(t * 0.2 + phase) * 0.9 - sScroll * (6 + base[2] * -0.15);
+      });
+      if (t > nextRipple) {
+        nextRipple = t + 2.2 + Math.random() * 2.2;
+        uniforms.uRip.value[ripIdx].set((Math.random() - 0.5) * 30, (Math.random() - 0.5) * 18 + 2, t);
+        ripIdx = (ripIdx + 1) % 3;
+      }
 
       // camera: mouse parallax + glide down/forward with scroll
       camera.position.x += (smx * 1.2 - camera.position.x) * 0.05;

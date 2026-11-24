@@ -440,3 +440,45 @@ footer{align-items:center;flex-wrap:wrap}
 section[data-num]{overflow-y:clip;overflow-clip-margin:24px}
 /* letter-split headings: only the original second-line span is muted, not every letter */
 .contact-card h2 .word,.contact-card h2 .ch{color:inherit}
+
+/* ---------- v6: agents dock at the side and rest when idle ---------- */
+.agent.docked .agent-tag{opacity:0;transform:translateX(10px) scale(.86);transform-origin:right top}
+.agent.docked .agent-tag em::before{content:"· "}
+.agent.docked .agent-arrow{animation:dockBreath 3.2s ease-in-out infinite}
+@keyframes dockBreath{50%{filter:drop-shadow(0 0 4px var(--c)) brightness(.8)}}
+.agent.docked:hover .agent-tag{opacity:1}
+@media (max-width:800px){.agent.docked .agent-tag em{display:none}}
+
+/* ---------- v6 UI: floating glass nav pill ---------- */
+.nav{transition:background .4s ease,border-color .4s ease}
+.nav .nav-inner{transition:width .6s var(--ease),height .5s var(--ease),margin .5s var(--ease),padding .5s var(--ease),background .5s ease,border-color .5s ease,border-radius .5s var(--ease),box-shadow .5s ease}
+.nav.scrolled{background:transparent;border-color:transparent;box-shadow:none}
+.nav.scrolled::after{display:none}
+.nav.scrolled .nav-inner{
+  width:min(1120px,calc(100% - 28px));height:58px;margin-top:10px;padding:0 8px 0 14px;
+  border:1px solid rgba(87,216,206,.18);border-radius:999px;
+  background:rgba(8,12,17,.74);backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.02);
+}
+.nav.scrolled .nav-cta{padding:8px 14px}
+
+/* ---------- build panel: mission-control progress ring ---------- */
+.build-log{border-radius:16px;border-color:rgba(87,216,206,.18)}
+.build-log-head span{gap:9px}
+.build-log-head span::before{content:"";width:14px;height:14px;border-radius:50%;
+  background:conic-gradient(var(--cyan) calc(var(--pct,0) * 1%),rgba(148,163,184,.18) 0);
+  -webkit-mask:radial-gradient(circle,transparent 4px,#000 4.5px);mask:radial-gradient(circle,transparent 4px,#000 4.5px)}
+.build-log-head span i{display:none}
+
+/* ---------- deployed sections draw an accent underline ---------- */
+.section-head::after{content:"";display:block;width:0;height:2px;margin-top:24px;border-radius:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),transparent);transition:width 1.4s var(--ease)}
+section.deployed .section-head::after{width:min(240px,50%)}
+
+/* marquee is driven by JS (scroll-reactive); keep CSS animation only as a no-JS fallback */
+html.js .marquee-track{will-change:transform}
+.project-visual{will-change:translate}
+@media (max-width:800px){
+  .nav.scrolled .nav-inner{width:calc(100% - 20px);height:54px;margin-top:8px}
+}
+@media (prefers-reduced-motion:reduce){.section-head::after{transition:none}}
