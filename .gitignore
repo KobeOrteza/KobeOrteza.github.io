@@ -1,0 +1,17 @@
+# dependencies / build output
+node_modules/
+worker/node_modules/
+worker/.wrangler/
+.wrangler/
+dist/
+
+# secrets (the Anthropic key lives only as a Cloudflare Worker secret)
+.env
+.env.*
+.dev.vars
+worker/.dev.vars
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

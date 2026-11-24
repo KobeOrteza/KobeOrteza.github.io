@@ -1,0 +1,24 @@
+name = "kobe-ai-chat"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Comma-separated list of sites allowed to call this worker.
+# Replace "*" with your real site once deployed, e.g. "https://kobe.vercel.app"
+ALLOWED_ORIGINS = "*"
+
+# Import the shared knowledge.js file as text (the worker parses the JSON inside it).
+[[rules]]
+type = "Text"
+globs = ["**/knowledge.js"]
+fallthrough = false
+
+# Optional hard rate limit (20 questions / minute per visitor) using Cloudflare's
+# rate limiting binding. Uncomment to enable; otherwise a best-effort in-memory limit is used.
+# [[ratelimits]]
+# name = "RATE_LIMITER"
+# namespace_id = "1001"
+#   [ratelimits.simple]
+#   limit = 20
+#   period = 60

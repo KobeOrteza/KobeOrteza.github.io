@@ -1,0 +1,15 @@
+{
+  "name": "kobe-ai-chat",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.13.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
